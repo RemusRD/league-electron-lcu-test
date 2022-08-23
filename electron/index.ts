@@ -108,14 +108,21 @@ async function notifySummonerInfo() {
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(async () => {
   winApp = createWindow();
-  twitchCredentials = await authProvider.getAccessToken(['chat:read', 'chat:edit']);
+  twitchCredentials = await authProvider.getAccessToken(['chat:edit', 'chat:read']);
   const provider = new StaticAuthProvider(clientId, twitchCredentials.accessToken);
   const chatClient = new ChatClient({
-    provider,
-    channels: ['youdeadmanko']
+    authProvider,
+    channels: ['remusrichard']
   });
   await chatClient.connect();
-  const hello = await chatClient.say('#youdeadmanko', 'Hola!!');
+  chatClient.onRegister(() => {
+    chatClient.say('remusrichard', 'Hello, I\'m now connected!');
+
+    chatClient.send( 'Hello, I\'m now connected!');
+    console.log(authProvider.currentScopes);
+    console.log('chatClient.onRegister');
+  })
+  const hello = await chatClient.say('remusrichard', 'Hola!!');
   console.log('hello: ', hello);
   await chatClient.onMessage((channel, user, message) => {
     console.log(`[${channel}][${user}]: ${message}`);
