@@ -1,3 +1,6 @@
+// @ts-nocheck
+import WebSocket from 'ws';
+
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
 
 const MESSAGE_TYPES = {
@@ -12,7 +15,7 @@ const MESSAGE_TYPES = {
   EVENT: 8
 };
 
-class RiotWSProtocol extends WebSocket {
+export class RiotWSProtocol extends WebSocket {
   constructor(url) {
     super(url, 'wamp');
 
@@ -36,6 +39,15 @@ class RiotWSProtocol extends WebSocket {
     this.send(MESSAGE_TYPES.SUBSCRIBE, topic);
   }
 
+  subscribeEvent(topic, callback) {
+    super.addListener(topic, callback);
+    this.send(MESSAGE_TYPES.EVENT, "OnJsonApiEvent", {
+      data : [],
+      eventType : "Update",
+      uri : "/lol-gameflow/v1/session"
+    });
+  }
+
   unsubscribe(topic, callback) {
     super.removeListener(topic, callback);
     this.send(MESSAGE_TYPES.UNSUBSCRIBE, topic);
@@ -45,11 +57,13 @@ class RiotWSProtocol extends WebSocket {
     super.send(JSON.stringify([type, message]));
   }
 
+  // eslint-disable-next-line no-underscore-dangle
   _onMessage(message) {
     const [type, ...data] = JSON.parse(message);
 
     switch (type) {
       case MESSAGE_TYPES.WELCOME:
+        // eslint-disable-next-line prefer-destructuring
         this.session = data[0];
         // this.protocolVersion = data[1];
         // this.details = data[2];
@@ -67,6 +81,7 @@ class RiotWSProtocol extends WebSocket {
         );
         break;
       case MESSAGE_TYPES.EVENT:
+        // eslint-disable-next-line no-case-declarations
         const [topic, payload] = data;
         payload.topic = topic;
         this.emit(topic, payload);
