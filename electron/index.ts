@@ -109,7 +109,6 @@ async function notifySummonerInfo() {
 app.whenReady().then(async () => {
   winApp = createWindow();
   twitchCredentials = await authProvider.getAccessToken(['chat:edit', 'chat:read']);
-  const provider = new StaticAuthProvider(clientId, twitchCredentials.accessToken);
   const chatClient = new ChatClient({
     authProvider,
     channels: ['remusrichard']
