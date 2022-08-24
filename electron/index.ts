@@ -117,17 +117,9 @@ app.whenReady().then(async () => {
   await chatClient.connect();
   chatClient.onRegister(() => {
     chatClient.say('remusrichard', 'Hello, I\'m now connected!');
-
-    chatClient.send( 'Hello, I\'m now connected!');
     console.log(authProvider.currentScopes);
     console.log('chatClient.onRegister');
   })
-  const hello = await chatClient.say('remusrichard', 'Hola!!');
-  console.log('hello: ', hello);
-  await chatClient.onMessage((channel, user, message) => {
-    console.log(`[${channel}][${user}]: ${message}`);
-    chatClient.say(channel, `Hola!`);
-  });
   const connector = new LCUConnector();
   connector.on('connect', async (data) => {
     winApp.webContents.send('clientStatus', { connected: true });
