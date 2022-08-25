@@ -1,33 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import AppBar from './AppBar';
+import React, {useEffect, useState} from 'react';
 
 function App() {
-  const [clientStatus, setClientStatus] = useState(false);
-  const [isSent, setSent] = useState(false);
-  const [fromMain, setFromMain] = useState<string | null>(null);
+    const [riotClientInfo, setRiotClientInfo] = useState(false);
+    const [twitchClientInfo, setTwitchClientInfo] = useState(false);
 
-  useEffect(() => {
-    if (window.Main)
-      window.Main.on('clientStatus', (message) => {
-        setClientStatus(message.connected);
-      });
-    window.Main.sendMessage('clientStatusCheck');
-  }, [clientStatus]);
+    useEffect(() => {
+        if (window.Main)
+            window.Main.on('clientStatus', (message) => {
+                setRiotClientInfo(message.connected);
+            });
+        window.Main.sendMessage('clientStatusCheck');
+    }, [riotClientInfo]);
 
-  return (
-    <div className="flex flex-col h-screen">
-      {window.Main && (
-        <div className="flex-none">
-          <AppBar />
-        </div>
-      )}
-      <div className="flex-auto">
-        <div className=" flex flex-col justify-center items-center h-full bg-gray-800 space-y-4">
-          <h2 className="text-white text-center"> {clientStatus === true ? 'Connected' : 'Disconnected'}</h2>
-        </div>
-      </div>
-    </div>
-  );
+  // split the screen in 2 blocks side by side, left side is the connection status and the broadcasterName,
+  // right side is the league client status and the summonerName using tailwind
+
 }
 
 export default App;
