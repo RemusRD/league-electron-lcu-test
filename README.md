@@ -35,3 +35,13 @@ Links:
 - [vite-react-electron](https://github.com/caoxiemeihao/vite-react-electron)
 - [electron-vite-react](https://github.com/twstyled/electron-vite-react)
 - [vite-electron-esbuild-starter](https://github.com/jctaoo/vite-electron-esbuild-starter)
+
+
+
+    // await apiClient.chat.sendAnnouncement(
+    //     hello.id,
+    //     hello.id,
+    //     {
+    //         message: 'Hello, world!'
+    //     }
+    // )

@@ -13,7 +13,6 @@ import {AccessToken} from '@twurple/auth';
 import {ApiClient} from '@twurple/api';
 import {RiotWSProtocol} from './RiotWSProtocol';
 import {clientId} from './config';
-import {rawDataSymbol} from "@twurple/common";
 
 electron.app.commandLine.appendSwitch('ignore-certificate-errors');
 
@@ -84,8 +83,6 @@ async function getCurrentSummoner() {
 async function notifySummonerInfo() {
     if (!clientConnected) return;
     try {
-        // twitchCredentials = await authProvider.getAccessToken(['chat:read', 'chat:edit']);
-        // console.log('twitchCredentials: ', twitchCredentials);
         const response = await getCurrentSummoner();
         const summonerInfo = await response.json();
         if (response.status === 200 && summonerInfo.displayName) {
@@ -113,15 +110,14 @@ app.whenReady().then(async () => {
     const apiClient = new ApiClient(
         {authProvider}
     );
-    const hello = await apiClient.users.getMe();
-    console.log('hello: ', hello[rawDataSymbol]);
-    await apiClient.chat.sendAnnouncement(
-        hello.id,
-        hello.id,
+    const twitchUser = await apiClient.users.getMe();
+    console.log("Connected to Twitch as " + twitchUser.displayName);
+    winApp.webContents.send('twitchConnection',
         {
-            message: 'Hello, world!'
+            twitchUserId: twitchUser.id,
+            username: twitchUser.displayName,
         }
-    )
+    );
 
     const connector = new LCUConnector();
     connector.on('connect', async (data) => {
@@ -130,18 +126,28 @@ app.whenReady().then(async () => {
         riotCredentials = data;
         const url = `wss://${riotCredentials.username}:${riotCredentials.password}@127.0.0.1:${riotCredentials.port}`;
         const ws = new RiotWSProtocol(url);
-        console.log(riotCredentials);
         ws.on('open', () => {
-            console.log('connected');
             ws.subscribe('OnJsonApiEvent', (event: any) => {
                 if (event?.data?.map?.gameMode === 'TFT') {
-                    if (event?.uri !== '/lol-gameflow/v1/session') {
+                    if (event?.uri === '/lol-gameflow/v1/session') {
+                        console.log(event);
                         if (event?.data?.phase === 'InProgress') {
-                            console.log(`Started game with Id: ${event?.data?.gameData?.gameId}`);
-                            console.log(`properties: ${event?.data?.map?.properties}`);
+                            apiClient.chat.sendAnnouncement(
+                                twitchUser.id,
+                                twitchUser.id,
+                                {message: 'Game started'}
+                            )
+                            console.log("Game started");
                         }
                         if (event?.data.phase === 'EndOfGame') {
-                            console.log(`Ended game with Id: ${event?.data?.gameData?.gameId}`);
+                            apiClient.chat.sendAnnouncement(
+                                twitchUser.id,
+                                twitchUser.id,
+                                {
+                                    message: 'Game ended'
+                                }
+                            )
+                            console.log("Game ended");
                             notifyEndOfGame();
                         }
                     }
@@ -193,7 +199,6 @@ async function notifyEndOfGame() {
         const response = await getEndOfGame();
         const endOfGame = await response.json();
         const {rank} = endOfGame.localPlayer;
-        console.log('rank: ', rank);
     } catch (e) {
         setTimeout(async () => {
             await notifyEndOfGame();
