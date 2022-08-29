@@ -165,9 +165,7 @@ ipcMain.on('message', async (event, message: any) => {
      await tftAdapter.connect();
      const currentSummoner = await tftAdapter.getCurrentSummoner();
      console.log('currentSummoner: ', currentSummoner)
-       winApp.webContents.send('tft-connected',
-         currentSummoner);
-
+       winApp.webContents.send('tft-connected', currentSummoner);
    }
 });
 

@@ -1,17 +1,20 @@
 import React, {useEffect, useState} from 'react';
 import AppBar from "./AppBar";
+import Icon from './assets/icons/tft-icon.webp';
+
 
 function App() {
-    const [riotClientInfo, setRiotClientInfo] = useState(false);
+    const [riotClientInfo, setRiotClientInfo] = useState(null);
     const [twitchConnection, setTwitchConnection] = useState<{ [key: string]: any }>({});
 
     useEffect(() => {
         if (window.Main) {
-            window.Main.on('clientStatus', (message) => {
-                setRiotClientInfo(message.connected);
+            window.Main.on('tft-connected', (message) => {
+                setRiotClientInfo(message);
             });
         }
-    }, [riotClientInfo]);
+    }, []);
+
 
     useEffect(() => {
         if (window.Main) {
@@ -36,10 +39,11 @@ function App() {
                 <AppBar/>
             </div>
             <div className=" flex flex-col justify-center items-center h-screen bg-gray-800 space-y-4">
-                <h1 className="text-2xl text-gray-200">Vite + React + Typescript + Electron + Tailwind</h1>
+                <h1 className="text-2xl text-gray-200">TFT prediction maker</h1>
                 <div className="flex flex-col space-y-4 items-center">
                     <div className="flex space-x-3">
-                        <h1 className="text-xl text-gray-50">League of legends conexión</h1>
+                        <img className="h-6 lg:-ml-2" src={Icon} alt="Tft icon" />
+                        <h1 className="text-xl text-gray-50">Conexión League of legends</h1>
                         <button onClick={connectTft}
                           className=" bg-green-400 rounded px-4 py-0 focus:outline-none hover:bg-green-300">
                             Conectar

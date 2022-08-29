@@ -70,5 +70,5 @@ export default class TftAdapter {
 }
 
 class Summoner {
-  constructor(readonly name: String) {}
+  constructor(readonly username: String) {}
 }
