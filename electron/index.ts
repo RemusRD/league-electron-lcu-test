@@ -26,7 +26,7 @@ let twitchUser: any = null;
 
 const authProvider = new ElectronAuthProvider({
   clientId,
-  redirectUri: 'http://localhost:3001/auth/callback'
+  redirectUri: 'http://localhost:3000/auth/callback'
 });
 
 function createWindow() {
