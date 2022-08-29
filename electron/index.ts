@@ -10,6 +10,7 @@ import isDev from 'electron-is-dev';
 import {ElectronAuthProvider} from '@twurple/auth-electron';
 import {clientId} from './config';
 import TftAdapter from "./TFTAdapter";
+import TwitchAdapter from "./TwitchAdapter";
 
 electron.app.commandLine.appendSwitch('ignore-certificate-errors');
 
@@ -17,9 +18,9 @@ const height = 400;
 const width = 600;
 let riotCredentials: any = null;
 let winApp: any = null;
-let twitchUser: any = null;
 
 const tftAdapter = new TftAdapter();
+const twitchAdapter = new TwitchAdapter();
 
 const authProvider = new ElectronAuthProvider({
   clientId,
@@ -32,7 +33,7 @@ function createWindow() {
     width,
     height,
     //  change to false to use AppBar
-    frame: false,
+    frame: true,
     show: true,
     resizable: true,
     fullscreenable: true,
@@ -167,6 +168,12 @@ ipcMain.on('message', async (event, message: any) => {
      console.log('currentSummoner: ', currentSummoner)
        winApp.webContents.send('tft-connected', currentSummoner);
    }
+});
+ipcMain.on('message', async (event, message: any) => {
+    if (message === 'twitch-connect') {
+        const twitchUser = await twitchAdapter.connect();
+        winApp.webContents.send('twitch-connected', twitchUser);
+    }
 });
 
 async function getEndOfGame() {

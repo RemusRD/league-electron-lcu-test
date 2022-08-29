@@ -1,17 +1,26 @@
 import React, {useEffect, useState} from 'react';
-import AppBar from "./AppBar";
-import Icon from './assets/icons/tft-icon.webp';
+import TftIcon from './assets/icons/tft-icon.webp';
+import TwitchIcon from './assets/icons/twitch-icon.png';
 
 
 function App() {
     const [riotClientInfo, setRiotClientInfo] = useState(null);
-    const [twitchConnection, setTwitchConnection] = useState<{ [key: string]: any }>({});
+    const [twitchConnection, setTwitchConnection] = useState(null);
+    const [activated, setActivated] = useState(false);
 
     useEffect(() => {
         if (window.Main) {
             window.Main.on('tft-connected', (message) => {
                 setRiotClientInfo(message);
             });
+        }
+    }, []);
+    useEffect(() => {
+        if (window.Main) {
+            window.Main.on('twitch-connected', (message) => {
+                    setTwitchConnection(message);
+                }
+            );
         }
     }, []);
 
@@ -33,30 +42,51 @@ function App() {
         }
     };
 
+    const connectTwitch = () => {
+        if (window.Main) {
+            window.Main.sendMessage("twitch-connect");
+        }
+    };
+    const activate = () => {
+        if (window.Main) {
+            window.Main.sendMessage("activate");
+            setActivated(true);
+        }
+    }
+
     return (
         <div className="flex flex-col h-screen">
-            <div className="flex-none">
-                <AppBar/>
-            </div>
             <div className=" flex flex-col justify-center items-center h-screen bg-gray-800 space-y-4">
-                <h1 className="text-2xl text-gray-200">TFT prediction maker</h1>
+                <h1 className="text-2xl text-gray-200">TFT prediction companion</h1>
                 <div className="flex flex-col space-y-4 items-center">
                     <div className="flex space-x-3">
-                        <img className="h-6 lg:-ml-2" src={Icon} alt="Tft icon" />
-                        <h1 className="text-xl text-gray-50">Conexión League of legends</h1>
-                        <button onClick={connectTft}
-                          className=" bg-green-400 rounded px-4 py-0 focus:outline-none hover:bg-green-300">
-                            Conectar
-                        </button>
+                        <img className="h-6 lg:-ml-2" src={TftIcon} alt="Tft icon"/>
+                        <h1 className="text-xl text-gray-50">Conexión League of legends: </h1>
+                        {!riotClientInfo && (
+                            <button onClick={connectTft}
+                                    className=" bg-amber-500 rounded px-4 py-0 focus:outline-none hover:bg-amber-300">
+                                Conectar
+                            </button>)}
                         {riotClientInfo && (
-                          <div className="flex flex-col space-y-2">
-                              <h1 className="text-gray-50 text-sm">Usuario: {riotClientInfo.username}</h1>
-                          </div>
+                            <h1 className="text-xl text-gray-50">{riotClientInfo.username} </h1>
                         )}
                     </div>
-                    <div>
-                        <h4 className=" text-yellow-200"></h4>
+                    <div className="flex space-x-3">
+                        <img className="h-6 lg:-ml-2" src={TwitchIcon} alt="Tft icon"/>
+                        <h1 className="text-xl text-gray-50">Conexión Twitch: </h1>
+                        {!twitchConnection && (
+                            <button onClick={connectTwitch}
+                                    className="bg-purple-500 rounded px-4 py-0 focus:outline-none hover:bg-purple-300">
+                                Conectar
+                            </button>)}
+                        {twitchConnection && (
+                            <h1 className="text-xl text-gray-50">{twitchConnection.username} </h1>
+                        )}
                     </div>
+                    {riotClientInfo && twitchConnection && !activated && (
+                        <button onClick={activate} className="bg-blue-500 rounded px-4 py-0 hover:bg-blue-300">
+                            Conectar
+                            </button>)}
                 </div>
             </div>
             <div/>
