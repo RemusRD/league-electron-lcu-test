@@ -24,6 +24,12 @@ function App() {
         window.Main.sendMessage('clientStatusCheck');
     }, []);
 
+    const connectTft = () => {
+        if (window.Main) {
+            window.Main.sendMessage("tft-connect");
+        }
+    };
+
     return (
         <div className="flex flex-col h-screen">
             <div className="flex-none">
@@ -33,7 +39,16 @@ function App() {
                 <h1 className="text-2xl text-gray-200">Vite + React + Typescript + Electron + Tailwind</h1>
                 <div className="flex flex-col space-y-4 items-center">
                     <div className="flex space-x-3">
-                        <h1 className="text-xl text-gray-50">💝 Welcome 💝, now send a massage to the Main 📩📩</h1>
+                        <h1 className="text-xl text-gray-50">League of legends conexión</h1>
+                        <button onClick={connectTft}
+                          className=" bg-green-400 rounded px-4 py-0 focus:outline-none hover:bg-green-300">
+                            Conectar
+                        </button>
+                        {riotClientInfo && (
+                          <div className="flex flex-col space-y-2">
+                              <h1 className="text-gray-50 text-sm">Usuario: {riotClientInfo.username}</h1>
+                          </div>
+                        )}
                     </div>
                     <div>
                         <h4 className=" text-yellow-200"></h4>
