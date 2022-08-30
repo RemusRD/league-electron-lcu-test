@@ -81,7 +81,8 @@ export default class TftAdapter {
     }
 
     async onGameEnded(callback: Function) {
-        this.ws.subscribe('/lol-gameflow/v1/gameflow-phase', (data) => {
+        this.ws.subscribe('OnJsonApiEvent_lol-end-of-game_v1_gameclient-eog-stats-block', (data) => {
+            //data.statsBlock.players
             if (data.data === 'EndOfGame') {
                 callback();
             }
