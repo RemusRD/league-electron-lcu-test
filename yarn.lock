@@ -309,7 +309,7 @@
     "@types/node" "^14.14.22"
     tslib "^2.1.0"
 
-"@d-fischer/connection@^6.6.0":
+"@d-fischer/connection@^6.4.2", "@d-fischer/connection@^6.6.0":
   version "6.6.2"
   resolved "https://registry.yarnpkg.com/@d-fischer/connection/-/connection-6.6.2.tgz#4de63824ef08f9b8dd87cd78a9772f474be00ea0"
   integrity sha512-lupWmQrsgcTUosf02kZK+Ygn3Q6HYisSGIwk3lxExOhmc+GJjwczyod8udC7nQJpwaFxebnBNSkqNGRMJBekSw==
@@ -3173,6 +3173,20 @@ internal-slot@^1.0.3:
     has "^1.0.3"
     side-channel "^1.0.4"
 
+ircv3@^0.26.14:
+  version "0.26.14"
+  resolved "https://registry.yarnpkg.com/ircv3/-/ircv3-0.26.14.tgz#8d18f253f53ead664299cda987302d8a550ffea6"
+  integrity sha512-R0wiULLrl2d6Rrmw3vgyi9Cxw1KHky9/RwTkSo/Y6sXFH45EuLpVJhm9eLHFTs8EKrayq4H6FYfEN95KBC1qMQ==
+  dependencies:
+    "@d-fischer/connection" "^6.4.2"
+    "@d-fischer/escape-string-regexp" "^5.0.0"
+    "@d-fischer/logger" "^3.1.0"
+    "@d-fischer/shared-utils" "^3.0.1"
+    "@d-fischer/typed-event-emitter" "^3.2.2"
+    "@types/node" "^14.14.19"
+    klona "^2.0.4"
+    tslib "^2.0.3"
+
 ircv3@^0.29.3:
   version "0.29.5"
   resolved "https://registry.yarnpkg.com/ircv3/-/ircv3-0.29.5.tgz#611e3f05bad502e37ad565bb9eaf24d3352a43ce"
@@ -5092,6 +5106,22 @@ twitch-auth@^4.6.7:
     "@d-fischer/shared-utils" "^3.0.1"
     tslib "^2.0.3"
     twitch-api-call "^4.6.7"
+    twitch-common "^4.6.7"
+
+twitch-chat-client@^4.6.7:
+  version "4.6.7"
+  resolved "https://registry.yarnpkg.com/twitch-chat-client/-/twitch-chat-client-4.6.7.tgz#46d42cfa90fe1045b86f0d81e26b203258f0f61d"
+  integrity sha512-KXRiEIWC1eK3Xbwsphcq6Bl/JAlzJEx9IVYOh3CXgkeu/tYgxzOlwVEtpmoK4CO9Z0CwpxBhE23NF8ZZ9wGdBQ==
+  dependencies:
+    "@d-fischer/cache-decorators" "^2.1.1"
+    "@d-fischer/deprecate" "^2.0.2"
+    "@d-fischer/logger" "^3.1.0"
+    "@d-fischer/rate-limiter" "^0.4.3"
+    "@d-fischer/shared-utils" "^3.0.1"
+    "@d-fischer/typed-event-emitter" "^3.2.2"
+    ircv3 "^0.26.14"
+    tslib "^2.0.3"
+    twitch-auth "^4.6.7"
     twitch-common "^4.6.7"
 
 twitch-common@^4.6.7:
