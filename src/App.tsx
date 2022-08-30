@@ -6,7 +6,7 @@ import TwitchIcon from './assets/icons/twitch-icon.png';
 function App() {
     const [riotClientInfo, setRiotClientInfo] = useState(null);
     const [twitchConnection, setTwitchConnection] = useState(null);
-    const [activated, setActivated] = useState(false);
+    const [PredictionsEnabled, setPredictionsEnabled] = useState(false);
 
     useEffect(() => {
         if (window.Main) {
@@ -47,10 +47,10 @@ function App() {
             window.Main.sendMessage("twitch-connect");
         }
     };
-    const activate = () => {
+    const enablePredictions = () => {
         if (window.Main) {
-            window.Main.sendMessage("activate");
-            setActivated(true);
+            window.Main.sendMessage("enable-predictions");
+            setPredictionsEnabled(true);
         }
     }
 
@@ -61,7 +61,7 @@ function App() {
                 <div className="flex flex-col space-y-4 items-center">
                     <div className="flex space-x-3">
                         <img className="h-6 lg:-ml-2" src={TftIcon} alt="Tft icon"/>
-                        <h1 className="text-xl text-gray-50">Conexión League of legends: </h1>
+                        <h1 className="text-xl text-gray-50">League of legends(requiere cliente iniciado): </h1>
                         {!riotClientInfo && (
                             <button onClick={connectTft}
                                     className=" bg-amber-500 rounded px-4 py-0 focus:outline-none hover:bg-amber-300">
@@ -83,11 +83,19 @@ function App() {
                             <h1 className="text-xl text-gray-50">{twitchConnection.username} </h1>
                         )}
                     </div>
-                    {riotClientInfo && twitchConnection && !activated && (
-                        <button onClick={activate} className="bg-blue-500 rounded px-4 py-0 hover:bg-blue-300">
-                            Conectar
-                            </button>)}
+                    {riotClientInfo && twitchConnection && (
+                            <div className="flex items-center space-x-3">
+                                <input type="checkbox" className="form-checkbox h-5 w-5 text-gray-600"
+                                       checked={PredictionsEnabled}
+                                       disabled={PredictionsEnabled}
+                                       onChange={enablePredictions}/>
+                                <label htmlFor="activate"><h1 className="text-l text-gray-50">Predicciones
+                                    automáticas </h1></label>
+                            </div>)}
                 </div>
+            </div>
+            <div className="flex justify-end items-end h-10 w-full bg-gray-800 text-gray-500 px-6">
+                <p className="text-s">© 2022 Remusrd</p>
             </div>
             <div/>
         </div>

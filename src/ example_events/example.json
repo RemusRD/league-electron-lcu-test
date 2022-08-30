@@ -1,0 +1,595 @@
+{
+  data: {
+    gameClient: {
+      observerServerIp: '',
+      observerServerPort: 0,
+      running: false,
+      serverIp: '',
+      serverPort: 0,
+      visible: false
+    },
+    gameData: {
+      gameId: 0,
+      gameName: '',
+      isCustomGame: false,
+      password: '',
+      playerChampionSelections: [],
+      queue: [Object],
+      spectatorsAllowed: false,
+      teamOne: [],
+      teamTwo: []
+    },
+    gameDodge: { dodgeIds: [], phase: 'None', state: 'Invalid' },
+    map: {
+      assets: [Object],
+      categorizedContentBundles: {},
+      description: 'Assemble a squad of champions that battle on your behalf. Outlast all seven of your opponents and become the last person standing.',
+      gameMode: 'TFT',
+      gameModeName: 'Teamfight Tactics',
+      gameModeShortName: '',
+      gameMutator: 'TFTTURBO',
+      id: 22,
+      isRGM: false,
+      mapStringId: 'TFT',
+      name: 'Teamfight Tactics',
+      perPositionDisallowedSummonerSpells: {},
+      perPositionRequiredSummonerSpells: {},
+      platformId: '',
+      platformName: '',
+      properties: [Object]
+    },
+    phase: 'ReadyCheck'
+  },
+  eventType: 'Update',
+  uri: '/lol-gameflow/v1/session',
+  topic: 'OnJsonApiEvent_lol-gameflow_v1_session'
+}
+{
+  data: 'ReadyCheck',
+  eventType: 'Update',
+  uri: '/lol-gameflow/v1/gameflow-phase',
+  topic: 'OnJsonApiEvent_lol-gameflow_v1_gameflow-phase'
+}
+{
+  data: {
+    gameClient: {
+      observerServerIp: '',
+      observerServerPort: 0,
+      running: false,
+      serverIp: '',
+      serverPort: 0,
+      visible: false
+    },
+    gameData: {
+      gameId: 0,
+      gameName: '',
+      isCustomGame: false,
+      password: '',
+      playerChampionSelections: [],
+      queue: [Object],
+      spectatorsAllowed: false,
+      teamOne: [],
+      teamTwo: []
+    },
+    gameDodge: { dodgeIds: [], phase: 'None', state: 'Invalid' },
+    map: {
+      assets: [Object],
+      categorizedContentBundles: {},
+      description: 'Assemble a squad of champions that battle on your behalf. Outlast all seven of your opponents and become the last person standing.',
+      gameMode: 'TFT',
+      gameModeName: 'Teamfight Tactics',
+      gameModeShortName: '',
+      gameMutator: 'TFTTURBO',
+      id: 22,
+      isRGM: false,
+      mapStringId: 'TFT',
+      name: 'Teamfight Tactics',
+      perPositionDisallowedSummonerSpells: {},
+      perPositionRequiredSummonerSpells: {},
+      platformId: '',
+      platformName: '',
+      properties: [Object]
+    },
+    phase: 'ChampSelect'
+  },
+  eventType: 'Update',
+  uri: '/lol-gameflow/v1/session',
+  topic: 'OnJsonApiEvent_lol-gameflow_v1_session'
+}
+{
+  data: 'ChampSelect',
+  eventType: 'Update',
+  uri: '/lol-gameflow/v1/gameflow-phase',
+  topic: 'OnJsonApiEvent_lol-gameflow_v1_gameflow-phase'
+}
+{
+  data: {
+    gameClient: {
+      observerServerIp: '185.40.64.163',
+      observerServerPort: 80,
+      running: false,
+      serverIp: '185.40.67.102',
+      serverPort: 5284,
+      visible: false
+    },
+    gameData: {
+      gameId: 6039294330,
+      gameName: '',
+      isCustomGame: false,
+      password: '',
+      playerChampionSelections: [Array],
+      queue: [Object],
+      spectatorsAllowed: false,
+      teamOne: [Array],
+      teamTwo: []
+    },
+    gameDodge: { dodgeIds: [], phase: 'None', state: 'Invalid' },
+    map: {
+      assets: [Object],
+      categorizedContentBundles: {},
+      description: 'Assemble a squad of champions that battle on your behalf. Outlast all seven of your opponents and become the last person standing.',
+      gameMode: 'TFT',
+      gameModeName: 'Teamfight Tactics',
+      gameModeShortName: '',
+      gameMutator: 'TFTTURBO',
+      id: 22,
+      isRGM: false,
+      mapStringId: 'TFT',
+      name: 'Teamfight Tactics',
+      perPositionDisallowedSummonerSpells: {},
+      perPositionRequiredSummonerSpells: {},
+      platformId: '',
+      platformName: '',
+      properties: [Object]
+    },
+    phase: 'ChampSelect'
+  },
+  eventType: 'Update',
+  uri: '/lol-gameflow/v1/session',
+  topic: 'OnJsonApiEvent_lol-gameflow_v1_session'
+}
+{
+  data: {
+    gameClient: {
+      observerServerIp: '185.40.64.163',
+      observerServerPort: 80,
+      running: false,
+      serverIp: '185.40.67.102',
+      serverPort: 5284,
+      visible: false
+    },
+    gameData: {
+      gameId: 6039294330,
+      gameName: '',
+      isCustomGame: false,
+      password: '',
+      playerChampionSelections: [Array],
+      queue: [Object],
+      spectatorsAllowed: false,
+      teamOne: [Array],
+      teamTwo: []
+    },
+    gameDodge: { dodgeIds: [], phase: 'None', state: 'Invalid' },
+    map: {
+      assets: [Object],
+      categorizedContentBundles: {},
+      description: 'Assemble a squad of champions that battle on your behalf. Outlast all seven of your opponents and become the last person standing.',
+      gameMode: 'TFT',
+      gameModeName: 'Teamfight Tactics',
+      gameModeShortName: '',
+      gameMutator: 'TFTTURBO',
+      id: 22,
+      isRGM: false,
+      mapStringId: 'TFT',
+      name: 'Teamfight Tactics',
+      perPositionDisallowedSummonerSpells: {},
+      perPositionRequiredSummonerSpells: {},
+      platformId: '',
+      platformName: '',
+      properties: [Object]
+    },
+    phase: 'GameStart'
+  },
+  eventType: 'Update',
+  uri: '/lol-gameflow/v1/session',
+  topic: 'OnJsonApiEvent_lol-gameflow_v1_session'
+}
+{
+  data: 'GameStart',
+  eventType: 'Update',
+  uri: '/lol-gameflow/v1/gameflow-phase',
+  topic: 'OnJsonApiEvent_lol-gameflow_v1_gameflow-phase'
+}
+
+{
+  data: {
+    gameClient: {
+      observerServerIp: '185.40.64.163',
+      observerServerPort: 80,
+      running: true,
+      serverIp: '185.40.67.102',
+      serverPort: 5284,
+      visible: false
+    },
+    gameData: {
+      gameId: 6039294330,
+      gameName: '',
+      isCustomGame: false,
+      password: '',
+      playerChampionSelections: [Array],
+      queue: [Object],
+      spectatorsAllowed: false,
+      teamOne: [Array],
+      teamTwo: []
+    },
+    gameDodge: { dodgeIds: [], phase: 'None', state: 'Invalid' },
+    map: {
+      assets: [Object],
+      categorizedContentBundles: {},
+      description: 'Assemble a squad of champions that battle on your behalf. Outlast all seven of your opponents and become the last person standing.',
+      gameMode: 'TFT',
+      gameModeName: 'Teamfight Tactics',
+      gameModeShortName: '',
+      gameMutator: 'TFTTURBO',
+      id: 22,
+      isRGM: false,
+      mapStringId: 'TFT',
+      name: 'Teamfight Tactics',
+      perPositionDisallowedSummonerSpells: {},
+      perPositionRequiredSummonerSpells: {},
+      platformId: '',
+      platformName: '',
+      properties: [Object]
+    },
+    phase: 'InProgress'
+  },
+  eventType: 'Update',
+  uri: '/lol-gameflow/v1/session',
+  topic: 'OnJsonApiEvent_lol-gameflow_v1_session'
+}
+{
+  data: 'InProgress',
+  eventType: 'Update',
+  uri: '/lol-gameflow/v1/gameflow-phase',
+  topic: 'OnJsonApiEvent_lol-gameflow_v1_gameflow-phase'
+}
+{
+  data: {
+    gameClient: {
+      observerServerIp: '185.40.64.163',
+      observerServerPort: 80,
+      running: true,
+      serverIp: '185.40.67.102',
+      serverPort: 5284,
+      visible: false
+    },
+    gameData: {
+      gameId: 6039294330,
+      gameName: '',
+      isCustomGame: false,
+      password: '',
+      playerChampionSelections: [Array],
+      queue: [Object],
+      spectatorsAllowed: false,
+      teamOne: [Array],
+      teamTwo: []
+    },
+    gameDodge: { dodgeIds: [], phase: 'None', state: 'Invalid' },
+    map: {
+      assets: [Object],
+      categorizedContentBundles: {},
+      description: 'Assemble a squad of champions that battle on your behalf. Outlast all seven of your opponents and become the last person standing.',
+      gameMode: 'TFT',
+      gameModeName: 'Teamfight Tactics',
+      gameModeShortName: '',
+      gameMutator: 'TFTTURBO',
+      id: 22,
+      isRGM: false,
+      mapStringId: 'TFT',
+      name: 'Teamfight Tactics',
+      perPositionDisallowedSummonerSpells: {},
+      perPositionRequiredSummonerSpells: {},
+      platformId: '',
+      platformName: '',
+      properties: [Object]
+    },
+    phase: 'InProgress'
+  },
+  eventType: 'Update',
+  uri: '/lol-gameflow/v1/session',
+  topic: 'OnJsonApiEvent_lol-gameflow_v1_session'
+}
+{
+  data: {
+    gameClient: {
+      observerServerIp: '185.40.64.163',
+      observerServerPort: 80,
+      running: true,
+      serverIp: '185.40.67.102',
+      serverPort: 5284,
+      visible: false
+    },
+    gameData: {
+      gameId: 6039294330,
+      gameName: '',
+      isCustomGame: false,
+      password: '',
+      playerChampionSelections: [Array],
+      queue: [Object],
+      spectatorsAllowed: false,
+      teamOne: [Array],
+      teamTwo: []
+    },
+    gameDodge: { dodgeIds: [], phase: 'None', state: 'Invalid' },
+    map: {
+      assets: [Object],
+      categorizedContentBundles: {},
+      description: 'Assemble a squad of champions that battle on your behalf. Outlast all seven of your opponents and become the last person standing.',
+      gameMode: 'TFT',
+      gameModeName: 'Teamfight Tactics',
+      gameModeShortName: '',
+      gameMutator: 'TFTTURBO',
+      id: 22,
+      isRGM: false,
+      mapStringId: 'TFT',
+      name: 'Teamfight Tactics',
+      perPositionDisallowedSummonerSpells: {},
+      perPositionRequiredSummonerSpells: {},
+      platformId: '',
+      platformName: '',
+      properties: [Object]
+    },
+    phase: 'InProgress'
+  },
+  eventType: 'Update',
+  uri: '/lol-gameflow/v1/session',
+  topic: 'OnJsonApiEvent_lol-gameflow_v1_session'
+}
+
+{
+  data: {
+    gameClient: {
+      observerServerIp: '185.40.64.163',
+      observerServerPort: 80,
+      running: true,
+      serverIp: '185.40.67.102',
+      serverPort: 5284,
+      visible: true
+    },
+    gameData: {
+      gameId: 6039294330,
+      gameName: '',
+      isCustomGame: false,
+      password: '',
+      playerChampionSelections: [Array],
+      queue: [Object],
+      spectatorsAllowed: false,
+      teamOne: [Array],
+      teamTwo: []
+    },
+    gameDodge: { dodgeIds: [], phase: 'None', state: 'Invalid' },
+    map: {
+      assets: [Object],
+      categorizedContentBundles: {},
+      description: 'Assemble a squad of champions that battle on your behalf. Outlast all seven of your opponents and become the last person standing.',
+      gameMode: 'TFT',
+      gameModeName: 'Teamfight Tactics',
+      gameModeShortName: '',
+      gameMutator: 'TFTTURBO',
+      id: 22,
+      isRGM: false,
+      mapStringId: 'TFT',
+      name: 'Teamfight Tactics',
+      perPositionDisallowedSummonerSpells: {},
+      perPositionRequiredSummonerSpells: {},
+      platformId: '',
+      platformName: '',
+      properties: [Object]
+    },
+    phase: 'InProgress'
+  },
+  eventType: 'Update',
+  uri: '/lol-gameflow/v1/session',
+  topic: 'OnJsonApiEvent_lol-gameflow_v1_session'
+}
+
+
+
+
+
+
+{
+  data: {
+    gameId: 6039294330,
+    gameMode: 'TFT',
+    isRanked: true,
+    queueId: 1130,
+    queueType: 'RANKED_TFT_TURBO',
+    statsBlock: { gameLengthSeconds: 660, players: [Array] }
+  },
+  eventType: 'Create',
+  uri: '/lol-end-of-game/v1/gameclient-eog-stats-block',
+  topic: 'OnJsonApiEvent_lol-end-of-game_v1_gameclient-eog-stats-block'
+}
+{
+  data: {
+    gameId: 6039294330,
+    gameLength: 660,
+    isRanked: true,
+    localPlayer: {
+      augments: [Array],
+      boardPieces: [Array],
+      companion: [Object],
+      ffaStanding: 8,
+      health: 0,
+      iconId: 508,
+      isLocalPlayer: true,
+      partnerGroupId: 0,
+      puuid: '18b8d03b-5ba2-5363-bcb8-c0351961086b',
+      rank: 8,
+      summonerId: 29069505,
+      summonerName: 'Kotlin Lover'
+    },
+    players: [
+      [Object], [Object],
+      [Object], [Object],
+      [Object], [Object],
+      [Object], [Object]
+    ],
+    queueId: 1130,
+    queueType: 'RANKED_TFT_TURBO'
+  },
+  eventType: 'Create',
+  uri: '/lol-end-of-game/v1/tft-eog-stats',
+  topic: 'OnJsonApiEvent_lol-end-of-game_v1_tft-eog-stats'
+}
+{
+  data: {
+    gameClient: {
+      observerServerIp: '185.40.64.163',
+      observerServerPort: 80,
+      running: true,
+      serverIp: '185.40.67.102',
+      serverPort: 5284,
+      visible: true
+    },
+    gameData: {
+      gameId: 6039294330,
+      gameName: '',
+      isCustomGame: false,
+      password: '',
+      playerChampionSelections: [Array],
+      queue: [Object],
+      spectatorsAllowed: false,
+      teamOne: [Array],
+      teamTwo: []
+    },
+    gameDodge: { dodgeIds: [], phase: 'None', state: 'Invalid' },
+    map: {
+      assets: [Object],
+      categorizedContentBundles: {},
+      description: 'Assemble a squad of champions that battle on your behalf. Outlast all seven of your opponents and become the last person standing.',
+      gameMode: 'TFT',
+      gameModeName: 'Teamfight Tactics',
+      gameModeShortName: '',
+      gameMutator: 'TFTTURBO',
+      id: 22,
+      isRGM: false,
+      mapStringId: 'TFT',
+      name: 'Teamfight Tactics',
+      perPositionDisallowedSummonerSpells: {},
+      perPositionRequiredSummonerSpells: {},
+      platformId: '',
+      platformName: '',
+      properties: [Object]
+    },
+    phase: 'PreEndOfGame'
+  },
+  eventType: 'Update',
+  uri: '/lol-gameflow/v1/session',
+  topic: 'OnJsonApiEvent_lol-gameflow_v1_session'
+}
+{
+  data: 'PreEndOfGame',
+  eventType: 'Update',
+  uri: '/lol-gameflow/v1/gameflow-phase',
+  topic: 'OnJsonApiEvent_lol-gameflow_v1_gameflow-phase'
+}
+{
+  data: {
+    gameClient: {
+      observerServerIp: '185.40.64.163',
+      observerServerPort: 80,
+      running: true,
+      serverIp: '185.40.67.102',
+      serverPort: 5284,
+      visible: true
+    },
+    gameData: {
+      gameId: 6039294330,
+      gameName: '',
+      isCustomGame: false,
+      password: '',
+      playerChampionSelections: [Array],
+      queue: [Object],
+      spectatorsAllowed: false,
+      teamOne: [Array],
+      teamTwo: []
+    },
+    gameDodge: { dodgeIds: [], phase: 'None', state: 'Invalid' },
+    map: {
+      assets: [Object],
+      categorizedContentBundles: {},
+      description: 'Assemble a squad of champions that battle on your behalf. Outlast all seven of your opponents and become the last person standing.',
+      gameMode: 'TFT',
+      gameModeName: 'Teamfight Tactics',
+      gameModeShortName: '',
+      gameMutator: 'TFTTURBO',
+      id: 22,
+      isRGM: false,
+      mapStringId: 'TFT',
+      name: 'Teamfight Tactics',
+      perPositionDisallowedSummonerSpells: {},
+      perPositionRequiredSummonerSpells: {},
+      platformId: '',
+      platformName: '',
+      properties: [Object]
+    },
+    phase: 'EndOfGame'
+  },
+  eventType: 'Update',
+  uri: '/lol-gameflow/v1/session',
+  topic: 'OnJsonApiEvent_lol-gameflow_v1_session'
+}
+{
+  data: 'EndOfGame',
+  eventType: 'Update',
+  uri: '/lol-gameflow/v1/gameflow-phase',
+  topic: 'OnJsonApiEvent_lol-gameflow_v1_gameflow-phase'
+}
+{
+  data: {
+    gameClient: {
+      observerServerIp: '185.40.64.163',
+      observerServerPort: 80,
+      running: false,
+      serverIp: '185.40.67.102',
+      serverPort: 5284,
+      visible: false
+    },
+    gameData: {
+      gameId: 6039294330,
+      gameName: '',
+      isCustomGame: false,
+      password: '',
+      playerChampionSelections: [Array],
+      queue: [Object],
+      spectatorsAllowed: false,
+      teamOne: [Array],
+      teamTwo: []
+    },
+    gameDodge: { dodgeIds: [], phase: 'None', state: 'Invalid' },
+    map: {
+      assets: [Object],
+      categorizedContentBundles: {},
+      description: 'Assemble a squad of champions that battle on your behalf. Outlast all seven of your opponents and become the last person standing.',
+      gameMode: 'TFT',
+      gameModeName: 'Teamfight Tactics',
+      gameModeShortName: '',
+      gameMutator: 'TFTTURBO',
+      id: 22,
+      isRGM: false,
+      mapStringId: 'TFT',
+      name: 'Teamfight Tactics',
+      perPositionDisallowedSummonerSpells: {},
+      perPositionRequiredSummonerSpells: {},
+      platformId: '',
+      platformName: '',
+      properties: [Object]
+    },
+    phase: 'EndOfGame'
+  },
+  eventType: 'Update',
+  uri: '/lol-gameflow/v1/session',
+  topic: 'OnJsonApiEvent_lol-gameflow_v1_session'
+}
