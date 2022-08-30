@@ -179,7 +179,7 @@ ipcMain.on('message', async (event, message: any) => {
 ipcMain.on('message', async (event, message: any) => {
     if (message === 'enable-predictions') {
         console.log("predictions enabled");
-        tftAdapter.onMatchStarted(createPrediction);
+        tftAdapter.onGameStarted(createPrediction);
     }
 });
 

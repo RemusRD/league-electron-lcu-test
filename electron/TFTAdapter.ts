@@ -9,6 +9,8 @@ export default class TftAdapter {
 
     riotCredentials: any;
 
+    ws : RiotWSProtocol;
+
     clientConnected = false;
 
     constructor() {
@@ -29,25 +31,10 @@ export default class TftAdapter {
                 if (this.clientConnected) {
                     clearInterval(interval);
                     const url = `wss://${this.riotCredentials.username}:${this.riotCredentials.password}@127.0.0.1:${this.riotCredentials.port}`;
-                    const ws = new RiotWSProtocol(url);
-                    ws.on('open', () => {
-                        ws.subscribe('OnJsonApiEvent_lol-gameflow_v1_gameflow-phase', (event: any) => {
-                            console.log(event);
-                        })
-                        ws.subscribe('OnJsonApiEvent_lol-gameflow_v1_session', (event: any) => {
-                            console.log(event);
-                        });
-                        ws.subscribe('OnJsonApiEvent_lol-end-of-game_v1_eog-stats-block', (event: any) => {
-                            console.log(event);
-                        });
-                        ws.subscribe('OnJsonApiEvent_lol-end-of-game_v1_tft-eog-stats', (event: any) => {
-                            console.log(event);
-                        });
-                        ws.subscribe('OnJsonApiEvent_lol-end-of-game_v1_gameclient-eog-stats-block', (event: any) => {
-                            console.log(event);
-                        });
+                    this.ws = new RiotWSProtocol(url);
+                    this.ws.on('open', () => {
+                        resolve(null);
                     });
-                    resolve(null);
                 }
             }, 100);
         })
@@ -85,8 +72,20 @@ export default class TftAdapter {
         // }
     }
 
-    async onMatchStarted(createPrediction: Function) {
+    async onGameStarted(callback: Function) {
+        this.ws.subscribe('/lol-gameflow/v1/gameflow-phase', (data) => {
+            if (data.data === 'GameStart') {
+                callback();
+            }
+        });
+    }
 
+    async onGameEnded(callback: Function) {
+        this.ws.subscribe('/lol-gameflow/v1/gameflow-phase', (data) => {
+            if (data.data === 'EndOfGame') {
+                callback();
+            }
+        });
     }
 }
 
