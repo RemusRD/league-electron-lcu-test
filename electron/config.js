@@ -1,5 +1,3 @@
-const clientId = 'kth8s3voqhjy6u4fbn415vp6auxq8k'
+const CLIENT_ID = 'kth8s3voqhjy6u4fbn415vp6auxq8k';
 
-const apiSecret = 'apisecret'
-
-export { clientId, apiSecret }
+export { CLIENT_ID };

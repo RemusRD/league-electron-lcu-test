@@ -1,148 +1,85 @@
 // @ts-nocheck
-import {join} from 'path';
-import fetch from 'electron-fetch';
+import { join } from 'path';
 
 // Packages
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import * as electron from 'electron';
-import {app, BrowserWindow, ipcMain} from 'electron';
+import { app, BrowserWindow, ipcMain } from 'electron';
 import isDev from 'electron-is-dev';
-import {ElectronAuthProvider} from '@twurple/auth-electron';
-import {clientId} from './config';
-import TftAdapter from "./TFTAdapter";
-import TwitchAdapter from "./TwitchAdapter";
+import TftAdapter from './TFTAdapter';
+import TwitchAdapter from './TwitchAdapter';
+import IpcMainEvent = Electron.Main.IpcMainEvent;
 
 electron.app.commandLine.appendSwitch('ignore-certificate-errors');
 
 const height = 400;
 const width = 600;
-let riotCredentials: any = null;
 let winApp: any = null;
 
 const tftAdapter = new TftAdapter();
 const twitchAdapter = new TwitchAdapter();
 
-const authProvider = new ElectronAuthProvider({
-    clientId,
-    redirectUri: 'http://localhost:3000/auth/callback'
-});
-
 function createWindow() {
-    // Create the browser window.
-    const window: BrowserWindow = new BrowserWindow({
-        width,
-        height,
-        //  change to false to use AppBar
-        frame: true,
-        show: true,
-        resizable: true,
-        fullscreenable: true,
-        webPreferences: {
-            preload: join(__dirname, 'preload.js')
-        }
-    });
-
-    const port = process.env.PORT || 3000;
-    const url = isDev ? `http://localhost:${port}` : join(__dirname, '../src/out/index.html');
-
-    // and load the index.html of the app.
-    if (isDev) {
-        window?.loadURL(url);
-    } else {
-        window?.loadFile(url);
+  const window: BrowserWindow = new BrowserWindow({
+    width,
+    height,
+    frame: true,
+    show: true,
+    resizable: true,
+    fullscreenable: true,
+    webPreferences: {
+      preload: join(__dirname, 'preload.js')
     }
-    // Open the DevTools.
-    // window.webContents.openDevTools();
+  });
 
-    // For AppBar
-    ipcMain.on('minimize', () => {
-        // eslint-disable-next-line no-unused-expressions
-        window.isMinimized() ? window.restore() : window.minimize();
-        // or alternatively: win.isVisible() ? win.hide() : win.show()
-    });
-    ipcMain.on('maximize', () => {
-        // eslint-disable-next-line no-unused-expressions
-        window.isMaximized() ? window.restore() : window.maximize();
-    });
-
-    ipcMain.on('close', () => {
-        window.close();
-    });
-    return window;
+  const port = process.env.PORT || 3000;
+  const url = isDev ? `http://localhost:${port}` : join(__dirname, '../src/out/index.html');
+  if (isDev) {
+    window?.loadURL(url);
+  } else {
+    window?.loadFile(url);
+  }
+  return window;
 }
 
-// "tft-connect"
-
-// Some APIs can only be used after this event occurs.
 app.whenReady().then(async () => {
-    winApp = createWindow();
+  winApp = createWindow();
 
-    app.on('activate', () => {
-        if (BrowserWindow.getAllWindows().length === 0) createWindow();
-    });
+  app.on('activate', () => {
+    if (BrowserWindow.getAllWindows().length === 0) createWindow();
+  });
 });
 
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits
 // explicitly with Cmd + Q.
 app.on('window-all-closed', () => {
-    if (process.platform !== 'darwin') app.quit();
+  if (process.platform !== 'darwin') app.quit();
 });
 
-ipcMain.on('message', (event, message: any) => {
-    // if (message === 'clientStatusCheck') {
-    //   event.sender.send('clientStatus', { connected: clientConnected });
-    //   winApp.webContents.send('twitchConnection', {
-    //     twitchUserId: twitchUser.id,
-    //     username: twitchUser.displayName
-    //   });
-    // }
-});
-ipcMain.on('message', async (event, message: any) => {
-    // if (message === 'summonerInfoCheck') {
-    //   await notifySummonerInfo();
-    // }
-});
-ipcMain.on('message', async (event, message: any) => {
-    if (message === 'tft-connect') {
-        await tftAdapter.connect(twitchAdapter);
-        console.log("tft connected");
-        const currentSummoner = await tftAdapter.getCurrentSummoner();
-        winApp.webContents.send('tft-connected', currentSummoner);
-    }
-});
-ipcMain.on('message', async (event, message: any) => {
-    if (message === 'twitch-connect') {
-        const twitchUser = await twitchAdapter.connect(twitchAdapter);
-        console.log("twitch connected");
-        winApp.webContents.send('twitch-connected', twitchUser);
-    }
-});
-ipcMain.on('message', async (event, message: any) => {
-    if (message === 'enable-predictions') {
-        console.log("predictions enabled");
-        // tftAdapter.onGameStarted(() => twitchAdapter.helloChat("Game started"));
-        // tftAdapter.onGameEnded(() => twitchAdapter.helloChat("Game ended"));
-    }
+onIpcMessage('tft-connect', async () => {
+  await tftAdapter.connect(twitchAdapter);
+  console.log('tft connected');
+  const currentSummoner = await tftAdapter.getCurrentSummoner();
+  winApp.webContents.send('tft-connected', currentSummoner);
 });
 
-async function getEndOfGame() {
-    const base64Creds = Buffer.from(`riot:${riotCredentials.password}`).toString('base64');
-    const response = await fetch(`https://127.0.0.1:${riotCredentials.port}/lol-end-of-game/v1/tft-eog-stats`, {
-        headers: {Authorization: `Basic ${base64Creds}`}
-    });
-    return response;
-}
+onIpcMessage('twitch-connect', async () => {
+  const twitchUser = await twitchAdapter.connect(twitchAdapter);
+  console.log('twitch connected');
+  winApp.webContents.send('twitch-connected', twitchUser);
+});
 
-async function notifyEndOfGame() {
-    // if (!clientConnected) return;
-    // try {
-    //   const response = await getEndOfGame();
-    //   const endOfGame = await response.json();
-    //   const { rank } = endOfGame.localPlayer;
-    // } catch (e) {
-    //   setTimeout(async () => {
-    //     await notifyEndOfGame();
-    //   }, 1000);
-    // }
+onIpcMessage('enable-predictions', async () => {
+  console.log('predictions enabled');
+  // tftAdapter.onGameStarted(() => twitchAdapter.helloChat("Game started"));
+  // tftAdapter.onGameEnded(() => twitchAdapter.helloChat("Game ended"));
+});
+
+function onIpcMessage(messageName: string, listener: (event: IpcMainEvent, ...args: any[]) => void) {
+  ipcMain.on('message', async (event, message: any) => {
+    if (message === messageName) {
+      listener(event, message);
+    }
+  });
 }
