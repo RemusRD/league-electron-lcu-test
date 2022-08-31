@@ -2,6 +2,7 @@
 import LCUConnector from "lcu-connector";
 import fetch from 'electron-fetch';
 import {RiotWSProtocol} from "./RiotWSProtocol";
+import TwitchAdapter, {Prediction} from "./TwitchAdapter";
 
 export default class TftAdapter {
 
@@ -12,6 +13,8 @@ export default class TftAdapter {
     ws: RiotWSProtocol;
 
     clientConnected = false;
+
+    currentPrediction: Prediction | null;
 
     constructor() {
         this.connector.on('connect', (data) => {
@@ -25,7 +28,7 @@ export default class TftAdapter {
         this.connector.start();
     }
 
-    async connect() {
+    async connect(twitchAdapter: TwitchAdapter) {
         return new Promise((resolve) => {
             const interval = setInterval(() => {
                 if (this.clientConnected) {
@@ -36,14 +39,23 @@ export default class TftAdapter {
                         this.ws.subscribe('OnJsonApiEvent_lol-gameflow_v1_gameflow-phase', (data) => {
                             if (data.data === 'GameStart') {
                                 this.onGameStarted();
+                                this.currentPrediction = twitchAdapter.createPrediction()
                             }
                         });
-                        this.ws.subscribe('OnJsonApiEvent_lol-end-of-game_v1_gameclient-eog-stats-block', (data) => {
-                            //TODO: ignore delete eventType when you exit the lobby
+                        this.ws.subscribe('OnJsonApiEvent_lol-end-of-game_v1_gameclient-eog-stats-block', async (data) => {
+                            if (!data?.data?.statsBlock?.players) return;
                             console.log("game ended");
                             console.log(data);
                             console.log(data?.data?.statsBlock);
                             console.log(data?.data?.statsBlock?.players);
+                            if (this.currentPrediction) {
+                                const summoner = await this.getCurrentSummoner()
+                                const summonerPosition = data?.data?.statsBlock?.players
+                                    .find((player: any) => player.summonerName === summoner.name).ffaStanding;
+                                const outcome = this.currentPrediction?.outcomes?.find((outcome: any) => outcome.title.includes(summonerPosition));
+                                twitchAdapter.endPrediction(this.currentPrediction.id, outcome);
+                                this.currentPrediction = null;
+                            }
                             //example:
                             //1] {
                             // [1]   gameLengthSeconds: 631,

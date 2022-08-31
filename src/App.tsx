@@ -83,7 +83,7 @@ function App() {
                             <h1 className="text-xl text-gray-50">{twitchConnection.username} </h1>
                         )}
                     </div>
-                    {riotClientInfo && twitchConnection && (
+                    {/*{riotClientInfo && twitchConnection && (
                             <div className="flex items-center space-x-3">
                                 <input type="checkbox" className="form-checkbox h-5 w-5 text-gray-600"
                                        checked={PredictionsEnabled}
@@ -91,7 +91,7 @@ function App() {
                                        onChange={enablePredictions}/>
                                 <label htmlFor="activate"><h1 className="text-l text-gray-50">Predicciones
                                     automáticas </h1></label>
-                            </div>)}
+                            </div>)}*/}
                 </div>
             </div>
             <div className="flex justify-end items-end h-10 w-full bg-gray-800 text-gray-500 px-6">

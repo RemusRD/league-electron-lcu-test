@@ -76,65 +76,7 @@ function createWindow() {
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(async () => {
     winApp = createWindow();
-    // const twitchCredentials = await authProvider.getAccessToken([
-    //   'chat:edit',
-    //   'chat:read',
-    //   'user:read:email',
-    //   'channel:manage:predictions'
-    // ]);
-    // const apiClient = new ApiClient({ authProvider });
-    // twitchUser = await apiClient.users.getMe();
-    // winApp.webContents.send('twitchConnection', {
-    //   twitchUserId: twitchUser.id,
-    //   username: twitchUser.displayName
-    // });
 
-    //
-
-    //
-    // connector.on('connect', async (data) => {
-    //   winApp.webContents.send('clientStatus', { connected: true });
-    //   clientConnected = true;
-    //   riotCredentials = data;
-    //   const url = `wss://${riotCredentials.username}:${riotCredentials.password}@127.0.0.1:${riotCredentials.port}`;
-    //   const ws = new RiotWSProtocol(url);
-    //   ws.on('open', () => {
-    //     ws.subscribe('OnJsonApiEvent', (event: any) => {
-    //       if (event?.data?.map?.gameMode === 'TFT') {
-    //         if (event?.uri === '/lol-gameflow/v1/session') {
-    //           console.log(event);
-    //           if (event?.data?.phase === 'InProgress') {
-    //             apiClient.chat.sendAnnouncement(twitchUser.id, twitchUser.id, { message: 'Game started' });
-    //             apiClient.predictions.createPrediction(
-    //               twitchUser.id,
-    //               new (class implements HelixCreatePredictionData {
-    //                 title = '¿Qué top quedamos?';
-    //
-    //                 outcomes = ['1,2', '3,4', '5,6', '7,8'];
-    //
-    //                 autoLockAfter = '120';
-    //               })()
-    //             );
-    //             console.log('Game started');
-    //           }
-    //           if (event?.data.phase === 'EndOfGame') {
-    //             apiClient.chat.sendAnnouncement(twitchUser.id, twitchUser.id, {
-    //               message: 'Game ended'
-    //             });
-    //             console.log('Game ended');
-    //             notifyEndOfGame();
-    //           }
-    //         }
-    //       }
-    //     });
-    //   });
-    //   await notifySummonerInfo();
-    // });
-    // connector.on('disconnect', () => {
-    //   console.log('disconnected');
-    //   winApp.webContents.send('clientStatus', { connected: false });
-    //   clientConnected = false;
-    // });
     app.on('activate', () => {
         if (BrowserWindow.getAllWindows().length === 0) createWindow();
     });
@@ -163,7 +105,7 @@ ipcMain.on('message', async (event, message: any) => {
 });
 ipcMain.on('message', async (event, message: any) => {
     if (message === 'tft-connect') {
-        await tftAdapter.connect();
+        await tftAdapter.connect(twitchAdapter);
         console.log("tft connected");
         const currentSummoner = await tftAdapter.getCurrentSummoner();
         winApp.webContents.send('tft-connected', currentSummoner);
@@ -171,7 +113,7 @@ ipcMain.on('message', async (event, message: any) => {
 });
 ipcMain.on('message', async (event, message: any) => {
     if (message === 'twitch-connect') {
-        const twitchUser = await twitchAdapter.connect();
+        const twitchUser = await twitchAdapter.connect(twitchAdapter);
         console.log("twitch connected");
         winApp.webContents.send('twitch-connected', twitchUser);
     }
