@@ -15,6 +15,8 @@ export default class TftAdapter {
 
   currentPrediction: Prediction | null;
 
+  twitchAdapter: TwitchAdapter;
+
   constructor() {
     this.connector.on('connect', (data) => {
       this.riotCredentials = data;
@@ -29,6 +31,7 @@ export default class TftAdapter {
 
   // TODO: pass here the callbacks
   async connect(twitchAdapter: TwitchAdapter) {
+    this.twitchAdapter = twitchAdapter;
     return new Promise((resolve) => {
       const interval = setInterval(() => {
         if (this.clientConnected) {
@@ -38,28 +41,14 @@ export default class TftAdapter {
           this.ws.on('open', () => {
             this.ws.subscribe('OnJsonApiEvent_lol-gameflow_v1_gameflow-phase', (data) => {
               if (data.data === 'GameStart') {
-                this.onGameStarted();
-                this.currentPrediction = twitchAdapter.createPrediction();
+                this.currentPrediction = this.twitchAdapter.createPrediction();
               }
             });
             this.ws.subscribe('OnJsonApiEvent_lol-end-of-game_v1_gameclient-eog-stats-block', async (data) => {
               if (!data?.data?.statsBlock?.players) return;
               console.log('game ended');
-              console.log(data);
-              console.log(data?.data?.statsBlock);
-              console.log(data?.data?.statsBlock?.players);
-              if (this.currentPrediction) {
-                const summoner = await this.getCurrentSummoner();
-                const summonerPosition = data?.data?.statsBlock?.players.find(
-                  (player: any) => player.summonerName === summoner.username
-                ).ffaStanding;
-                const outcome = this.currentPrediction?.outcomes?.find((outcome: any) =>
-                  outcome.title.includes(summonerPosition)
-                );
-                await twitchAdapter.endPrediction(this.currentPrediction.id, outcome);
-                this.currentPrediction = null;
-              }
-              this.onGameEnded();
+              await this.resolveCurrentPrediction(data);
+              await this.twitchAdapter.launchAd();
             });
             resolve(null);
           });
@@ -68,20 +57,27 @@ export default class TftAdapter {
     });
   }
 
+  private async resolveCurrentPrediction(data) {
+    if (this.currentPrediction) {
+      const summoner = await this.getCurrentSummoner();
+      const summonerPosition = data?.data?.statsBlock?.players.find(
+        (player: any) => player.summonerName === summoner.username
+      ).ffaStanding;
+      console.log('summonerPosition', summonerPosition);
+      const outcome = this.currentPrediction?.outcomes?.find((outcome: any) =>
+        outcome.title.includes(summonerPosition)
+      );
+      await this.twitchAdapter.endPrediction(this.currentPrediction.id, outcome);
+      this.currentPrediction = null;
+    }
+  }
+
   async getCurrentSummoner(): Promise<Summoner> {
     const base64Creds = Buffer.from(`riot:${this.riotCredentials.password}`).toString('base64');
     const response = await fetch(`https://127.0.0.1:${this.riotCredentials.port}/lol-summoner/v1/current-summoner`, {
       headers: { Authorization: `Basic ${base64Creds}` }
     });
     return new Summoner((await response.json()).displayName);
-  }
-
-  onGameStarted(callback: Function) {
-    console.log('game started');
-  }
-
-  onGameEnded(callback: Function) {
-    console.log('game ended');
   }
 }
 

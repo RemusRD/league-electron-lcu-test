@@ -8,7 +8,6 @@ import { app, BrowserWindow, ipcMain } from 'electron';
 import isDev from 'electron-is-dev';
 import TftAdapter from './TFTAdapter';
 import TwitchAdapter from './TwitchAdapter';
-import IpcMainEvent = Electron.Main.IpcMainEvent;
 
 electron.app.commandLine.appendSwitch('ignore-certificate-errors');
 
@@ -76,7 +75,7 @@ onIpcMessage('enable-predictions', async () => {
   // tftAdapter.onGameEnded(() => twitchAdapter.helloChat("Game ended"));
 });
 
-function onIpcMessage(messageName: string, listener: (event: IpcMainEvent, ...args: any[]) => void) {
+function onIpcMessage(messageName: string, listener: () => void) {
   ipcMain.on('message', async (event, message: any) => {
     if (message === messageName) {
       listener(event, message);

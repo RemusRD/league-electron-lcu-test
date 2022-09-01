@@ -22,7 +22,8 @@ export default class TwitchAdapter {
       'chat:edit',
       'chat:read',
       'user:read:email',
-      'channel:manage:predictions'
+      'channel:manage:predictions',
+      'channel:edit:commercial'
     ]);
     this.apiClient = new ApiClient({ authProvider: this.authProvider });
     const twitchUser = await this.apiClient.helix.users.getMe();
@@ -51,6 +52,12 @@ export default class TwitchAdapter {
   async endPrediction(predictionId: string, outcome: PredictionOutcome) {
     console.log(`Twitch end prediction with outcome ${outcome}`);
     await this.apiClient.helix.predictions.resolvePrediction(this.twitchUser.id, predictionId, outcome.id);
+  }
+
+  async launchAd() {
+    console.log('launching ad');
+    // TODO: check the duration of the ad
+    await this.apiClient.helix.channels.startChannelCommercial(this.twitchUser.id, 30);
   }
 
   async helloChat(message: string) {
