@@ -83,7 +83,9 @@ function App() {
         </div>
       </div>
       <div className="flex justify-end items-end h-10 w-full bg-gray-800 text-gray-500 px-6">
-        <p className="text-s">© {new Date().getFullYear()} Remusrd</p>
+        <p className="text-s">
+          © {new Date().getFullYear()} Remusrd v{process.env.npm_package_version}
+        </p>
       </div>
       <div />
     </div>

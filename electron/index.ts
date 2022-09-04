@@ -6,8 +6,11 @@ import { join } from 'path';
 import * as electron from 'electron';
 import { app, BrowserWindow, ipcMain } from 'electron';
 import isDev from 'electron-is-dev';
+import * as dotenv from 'dotenv'; // see https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-import
 import TftAdapter from './TFTAdapter';
 import TwitchAdapter from './TwitchAdapter';
+
+dotenv.config();
 
 electron.app.commandLine.appendSwitch('ignore-certificate-errors');
 
@@ -27,7 +30,9 @@ function createWindow() {
     resizable: true,
     fullscreenable: true,
     webPreferences: {
-      preload: join(__dirname, 'preload.js')
+      preload: join(__dirname, 'preload.js'),
+      nodeIntegration: true,
+      contextIsolation: false
     }
   });
 
