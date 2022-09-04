@@ -37,9 +37,9 @@ export default class TwitchAdapter {
     const prediction = await this.apiClient.helix.predictions.createPrediction(
       this.twitchUser.id,
       new (class implements HelixCreatePredictionData {
-        title = '¿Qué top quedamos?';
+        title = '¿Cómo quedaré en este lobby?';
 
-        outcomes = ['1,2', '3,4', '5,6', '7,8'];
+        outcomes = ['1-2', '3-4', '5-6', '7-8'];
 
         autoLockAfter = '120';
       })()
@@ -56,8 +56,7 @@ export default class TwitchAdapter {
 
   async launchAd() {
     console.log('launching ad');
-    // TODO: check the duration of the ad
-    await this.apiClient.helix.channels.startChannelCommercial(this.twitchUser.id, 30);
+    await this.apiClient.helix.channels.startChannelCommercial(this.twitchUser.id, 120);
   }
 
   async helloChat(message: string) {

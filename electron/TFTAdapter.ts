@@ -29,7 +29,7 @@ export default class TftAdapter {
     this.connector.start();
   }
 
-  // TODO: pass here the callbacks
+  // TODO: pass here the callbacks?
   async connect(twitchAdapter: TwitchAdapter) {
     this.twitchAdapter = twitchAdapter;
     return new Promise((resolve) => {
@@ -41,6 +41,7 @@ export default class TftAdapter {
           this.ws.on('open', () => {
             this.ws.subscribe('OnJsonApiEvent_lol-gameflow_v1_gameflow-phase', (data) => {
               if (data.data === 'GameStart') {
+                // Limit to TFT
                 this.currentPrediction = this.twitchAdapter.createPrediction();
               }
             });
