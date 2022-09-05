@@ -4,13 +4,11 @@ import { join } from 'path';
 // Packages
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import * as electron from 'electron';
-import { app, BrowserWindow, ipcMain } from 'electron';
+import { app, BrowserWindow, dialog, ipcMain } from 'electron';
 import isDev from 'electron-is-dev';
-import * as dotenv from 'dotenv'; // see https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-import
+import { autoUpdater } from 'electron-updater';
 import TftAdapter from './TFTAdapter';
 import TwitchAdapter from './TwitchAdapter';
-
-dotenv.config();
 
 electron.app.commandLine.appendSwitch('ignore-certificate-errors');
 
@@ -42,6 +40,9 @@ function createWindow() {
     window?.loadURL(url);
   } else {
     window?.loadFile(url);
+  }
+  if (!isDev) {
+    autoUpdater.checkForUpdates();
   }
   return window;
 }
@@ -87,3 +88,31 @@ function onIpcMessage(messageName: string, listener: () => void) {
     }
   });
 }
+
+autoUpdater.on('update-available', (_event, releaseNotes, releaseName) => {
+  const dialogOpts = {
+    type: 'info',
+    buttons: ['Ok'],
+    title: 'Application Update',
+    message: process.platform === 'win32' ? releaseNotes : releaseName,
+    detail: 'A new version is being downloaded.'
+  };
+  console.log('update available');
+  dialog.showMessageBox(dialogOpts, (response) => {
+    console.log(response);
+  });
+});
+
+autoUpdater.on('update-downloaded', (_event, releaseNotes, releaseName) => {
+  const dialogOpts = {
+    type: 'info',
+    buttons: ['Restart', 'Later'],
+    title: 'Application Update',
+    message: process.platform === 'win32' ? releaseNotes : releaseName,
+    detail: 'A new version has been downloaded. Restart the application to apply the updates.'
+  };
+  console.log('update-downloaded');
+  dialog.showMessageBox(dialogOpts).then((returnValue) => {
+    if (returnValue.response === 0) autoUpdater.quitAndInstall();
+  });
+});

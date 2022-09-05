@@ -43,7 +43,7 @@ function App() {
   return (
     <div className="flex flex-col h-screen">
       <div className=" flex flex-col justify-center items-center h-screen bg-gray-800 space-y-4">
-        <h1 className="text-2xl text-gray-200">TFT prediction companion</h1>
+        <h1 className="text-2xl text-gray-200">TFT prediction companion V4 release</h1>
         <div className="flex flex-col space-y-4 items-center">
           <div className="flex space-x-3">
             <img className="h-6 lg:-ml-2" src={TftIcon} alt="Tft icon" />
