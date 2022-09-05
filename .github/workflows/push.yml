@@ -7,7 +7,6 @@ on:
 
 jobs:
   build:
-    description: Build the electron app
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v2
