@@ -1,6 +1,6 @@
 {
   "name": "TFT-poll-maker",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "license": "MIT",
   "main": "main/index.js",
   "author": {
