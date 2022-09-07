@@ -28,9 +28,7 @@ function createWindow() {
     resizable: true,
     fullscreenable: true,
     webPreferences: {
-      preload: join(__dirname, 'preload.js'),
-      nodeIntegration: true,
-      contextIsolation: false
+      preload: join(__dirname, 'preload.js')
     }
   });
 
@@ -53,11 +51,12 @@ app.whenReady().then(async () => {
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
   });
+
+  winApp.webContents.on('did-finish-load', () => {
+    winApp.webContents.send('app-version', process.env.npm_package_version);
+  });
 });
 
-// Quit when all windows are closed, except on macOS. There, it's common
-// for applications and their menu bar to stay active until the user quits
-// explicitly with Cmd + Q.
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') app.quit();
 });

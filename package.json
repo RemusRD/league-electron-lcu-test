@@ -1,6 +1,6 @@
 {
   "name": "TFT-poll-maker",
-  "version": "0.0.6",
+  "version": "0.0.1",
   "license": "MIT",
   "main": "main/index.js",
   "author": {
@@ -27,7 +27,7 @@
     "type-check": "tsc",
     "lint": "eslint . --ext js,jsx,ts,tsx",
     "lint:fix": "eslint . --ext js,jsx,ts,tsx --fix",
-    "release": "yarn dist && electron-builder -p always"
+    "release": "yarn build && electron-builder -p always"
   },
   "dependencies": {
     "@twurple/api": "^5.2.2",

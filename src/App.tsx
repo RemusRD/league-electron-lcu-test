@@ -6,6 +6,15 @@ function App() {
   const [riotClientInfo, setRiotClientInfo] = useState(null);
   const [twitchConnection, setTwitchConnection] = useState(null);
   const [PredictionsEnabled, setPredictionsEnabled] = useState(false);
+  const [appVersion, setAppVersion] = useState(null);
+
+  useEffect(() => {
+    if (window.Main) {
+      window.Main.on('app-version', (message) => {
+        setAppVersion(message);
+      });
+    }
+  }, []);
 
   useEffect(() => {
     if (window.Main) {
@@ -43,7 +52,7 @@ function App() {
   return (
     <div className="flex flex-col h-screen">
       <div className=" flex flex-col justify-center items-center h-screen bg-gray-800 space-y-4">
-        <h1 className="text-2xl text-gray-200">TFT prediction companion V4 release</h1>
+        <h1 className="text-2xl text-gray-200">TFT prediction companion</h1>
         <div className="flex flex-col space-y-4 items-center">
           <div className="flex space-x-3">
             <img className="h-6 lg:-ml-2" src={TftIcon} alt="Tft icon" />
@@ -84,7 +93,7 @@ function App() {
       </div>
       <div className="flex justify-end items-end h-10 w-full bg-gray-800 text-gray-500 px-6">
         <p className="text-s">
-          © {new Date().getFullYear()} Remusrd v{process.env.npm_package_version}
+          © {new Date().getFullYear()} Remusrd v{appVersion}
         </p>
       </div>
       <div />
