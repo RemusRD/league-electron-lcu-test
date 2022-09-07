@@ -12,5 +12,5 @@ jobs:
       - name: Merge me!
         uses: ahmadnassri/action-dependabot-auto-merge@v2
         with:
-          target: minor
+          target: major
           github-token: ${{ secrets.GH_TOKEN }}
