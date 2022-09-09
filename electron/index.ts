@@ -16,8 +16,12 @@ const height = 400;
 const width = 600;
 let winApp: any = null;
 
-const tftAdapter = new TftAdapter();
 const twitchAdapter = new TwitchAdapter();
+const tftAdapter = new TftAdapter(twitchAdapter, async () => {
+  const currentSummoner = await tftAdapter.getCurrentSummoner();
+  console.log('current summoner:::', currentSummoner);
+  winApp.webContents.send('tft-connected', currentSummoner);
+});
 
 function createWindow() {
   const window: BrowserWindow = new BrowserWindow({
@@ -59,14 +63,6 @@ app.whenReady().then(async () => {
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') app.quit();
-});
-
-onIpcMessage('tft-connect', async () => {
-  await tftAdapter.connect(twitchAdapter);
-  console.log('tft connected');
-  const currentSummoner = await tftAdapter.getCurrentSummoner();
-  console.log('current summoner:::', currentSummoner);
-  winApp.webContents.send('tft-connected', currentSummoner);
 });
 
 onIpcMessage('twitch-connect', async () => {

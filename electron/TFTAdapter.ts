@@ -17,10 +17,12 @@ export default class TftAdapter {
 
   twitchAdapter: TwitchAdapter;
 
-  constructor() {
-    this.connector.on('connect', (data) => {
+  constructor(twitchAdapter: TwitchAdapter, onConnect: () => void) {
+    this.connector.on('connect', async (data) => {
       this.riotCredentials = data;
       this.clientConnected = true;
+      this.twitchAdapter = twitchAdapter;
+      await this.connect(onConnect);
     });
     this.connector.on('disconnect', () => {
       this.riotCredentials = null;
@@ -30,8 +32,7 @@ export default class TftAdapter {
   }
 
   // TODO: pass here the callbacks?
-  async connect(twitchAdapter: TwitchAdapter) {
-    this.twitchAdapter = twitchAdapter;
+  async connect(onConnect: () => void) {
     return new Promise((resolve) => {
       const interval = setInterval(() => {
         if (this.clientConnected) {
@@ -65,6 +66,7 @@ export default class TftAdapter {
               await this.twitchAdapter.launchAd();
             });
             clearInterval(interval);
+            onConnect();
             resolve(null);
           });
         }
