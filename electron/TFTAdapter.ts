@@ -36,6 +36,7 @@ export default class TftAdapter {
       const interval = setInterval(() => {
         if (this.clientConnected) {
           clearInterval(interval);
+          console.log(this.riotCredentials);
           const url = `wss://${this.riotCredentials.username}:${this.riotCredentials.password}@127.0.0.1:${this.riotCredentials.port}`;
           this.ws = new RiotWSProtocol(url);
           this.ws.on('open', () => {
