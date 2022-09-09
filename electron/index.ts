@@ -65,6 +65,7 @@ onIpcMessage('tft-connect', async () => {
   await tftAdapter.connect(twitchAdapter);
   console.log('tft connected');
   const currentSummoner = await tftAdapter.getCurrentSummoner();
+  console.log('current summoner:::', currentSummoner);
   winApp.webContents.send('tft-connected', currentSummoner);
 });
 

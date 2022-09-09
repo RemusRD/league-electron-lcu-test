@@ -35,11 +35,23 @@ export default class TftAdapter {
     return new Promise((resolve) => {
       const interval = setInterval(() => {
         if (this.clientConnected) {
-          clearInterval(interval);
-          console.log(this.riotCredentials);
           const url = `wss://${this.riotCredentials.username}:${this.riotCredentials.password}@127.0.0.1:${this.riotCredentials.port}`;
           this.ws = new RiotWSProtocol(url);
-          this.ws.on('open', () => {
+          this.ws.on('open', async () => {
+            try {
+              this.ws.subscribe('nothing', () => {});
+            } catch (e) {
+              return;
+            }
+            try {
+              const summoner = await this.getCurrentSummoner();
+              if (!summoner.username) {
+                return;
+              }
+              console.log('TFT service available, username: ', summoner.username);
+            } catch (e) {
+              return;
+            }
             this.ws.subscribe('OnJsonApiEvent_lol-gameflow_v1_gameflow-phase', (data) => {
               if (data.data === 'GameStart') {
                 // Limit to TFT
@@ -52,6 +64,7 @@ export default class TftAdapter {
               await this.resolveCurrentPrediction(data);
               await this.twitchAdapter.launchAd();
             });
+            clearInterval(interval);
             resolve(null);
           });
         }

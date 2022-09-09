@@ -18,7 +18,6 @@ const MESSAGE_TYPES = {
 export class RiotWSProtocol extends WebSocket {
   constructor(url) {
     super(url, 'wamp');
-
     this.session = null;
     // eslint-disable-next-line no-underscore-dangle
     this.on('message', this._onMessage.bind(this));
@@ -37,20 +36,6 @@ export class RiotWSProtocol extends WebSocket {
   subscribe(topic, callback) {
     super.addListener(topic, callback);
     this.send(MESSAGE_TYPES.SUBSCRIBE, topic);
-  }
-
-  subscribeEvent(topic, callback) {
-    super.addListener(topic, callback);
-    this.send(MESSAGE_TYPES.EVENT, "OnJsonApiEvent", {
-      data : [],
-      eventType : "Update",
-      uri : "/lol-gameflow/v1/session"
-    });
-  }
-
-  unsubscribe(topic, callback) {
-    super.removeListener(topic, callback);
-    this.send(MESSAGE_TYPES.UNSUBSCRIBE, topic);
   }
 
   send(type, message) {
