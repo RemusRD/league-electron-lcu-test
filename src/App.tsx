@@ -23,6 +23,14 @@ function App() {
       });
     }
   }, []);
+
+  useEffect(() => {
+    if (window.Main) {
+      window.Main.on('tft-disconnected', () => {
+        setRiotClientInfo(null);
+      });
+    }
+  }, []);
   useEffect(() => {
     if (window.Main) {
       window.Main.on('twitch-connected', (message) => {

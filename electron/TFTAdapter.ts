@@ -17,16 +17,17 @@ export default class TftAdapter {
 
   twitchAdapter: TwitchAdapter;
 
-  constructor(twitchAdapter: TwitchAdapter, onConnect: () => void) {
+  constructor(twitchAdapter: TwitchAdapter, onConnect: () => void, onDisconnect: () => void) {
     this.connector.on('connect', async (data) => {
       this.riotCredentials = data;
       this.clientConnected = true;
       this.twitchAdapter = twitchAdapter;
       await this.connect(onConnect);
     });
-    this.connector.on('disconnect', () => {
+    this.connector.on('disconnect', async () => {
       this.riotCredentials = null;
       this.clientConnected = false;
+      await onDisconnect();
     });
     this.connector.start();
   }
@@ -34,43 +35,45 @@ export default class TftAdapter {
   // TODO: pass here the callbacks?
   async connect(onConnect: () => void) {
     return new Promise((resolve) => {
-      const interval = setInterval(() => {
-        if (this.clientConnected) {
-          const url = `wss://${this.riotCredentials.username}:${this.riotCredentials.password}@127.0.0.1:${this.riotCredentials.port}`;
-          this.ws = new RiotWSProtocol(url);
-          this.ws.on('open', async () => {
-            try {
-              this.ws.subscribe('nothing', () => {});
-            } catch (e) {
-              return;
-            }
-            try {
-              const summoner = await this.getCurrentSummoner();
-              if (!summoner.username) {
+      const url = `wss://${this.riotCredentials.username}:${this.riotCredentials.password}@127.0.0.1:${this.riotCredentials.port}`;
+      this.ws = new RiotWSProtocol(url);
+      this.ws.on('open', async () => {
+        const interval = setInterval(() => {
+          if (this.clientConnected) {
+            this.ws.on('open', async () => {
+              try {
+                this.ws.subscribe('nothing', () => {});
+              } catch (e) {
                 return;
               }
-              console.log('TFT service available, username: ', summoner.username);
-            } catch (e) {
-              return;
-            }
-            this.ws.subscribe('OnJsonApiEvent_lol-gameflow_v1_gameflow-phase', (data) => {
-              if (data.data === 'GameStart') {
-                // Limit to TFT
-                this.currentPrediction = this.twitchAdapter.createPrediction();
+              try {
+                const summoner = await this.getCurrentSummoner();
+                if (!summoner.username) {
+                  return;
+                }
+                console.log('TFT service available, username: ', summoner.username);
+              } catch (e) {
+                return;
               }
+              this.ws.subscribe('OnJsonApiEvent_lol-gameflow_v1_gameflow-phase', (data) => {
+                if (data.data === 'GameStart') {
+                  // Limit to TFT
+                  this.currentPrediction = this.twitchAdapter.createPrediction();
+                }
+              });
+              this.ws.subscribe('OnJsonApiEvent_lol-end-of-game_v1_gameclient-eog-stats-block', async (data) => {
+                if (!data?.data?.statsBlock?.players) return;
+                console.log('game ended');
+                await this.resolveCurrentPrediction(data);
+                await this.twitchAdapter.launchAd();
+              });
+              clearInterval(interval);
+              await onConnect();
+              resolve(null);
             });
-            this.ws.subscribe('OnJsonApiEvent_lol-end-of-game_v1_gameclient-eog-stats-block', async (data) => {
-              if (!data?.data?.statsBlock?.players) return;
-              console.log('game ended');
-              await this.resolveCurrentPrediction(data);
-              await this.twitchAdapter.launchAd();
-            });
-            clearInterval(interval);
-            onConnect();
-            resolve(null);
-          });
-        }
-      }, 100);
+          }
+        }, 1000);
+      });
     });
   }
 

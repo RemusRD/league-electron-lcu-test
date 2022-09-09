@@ -34,6 +34,7 @@ export class RiotWSProtocol extends WebSocket {
   }
 
   subscribe(topic, callback) {
+    console.log('subscribing to topic', topic);
     super.addListener(topic, callback);
     this.send(MESSAGE_TYPES.SUBSCRIBE, topic);
   }

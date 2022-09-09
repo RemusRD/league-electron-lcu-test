@@ -17,11 +17,17 @@ const width = 600;
 let winApp: any = null;
 
 const twitchAdapter = new TwitchAdapter();
-const tftAdapter = new TftAdapter(twitchAdapter, async () => {
-  const currentSummoner = await tftAdapter.getCurrentSummoner();
-  console.log('current summoner:::', currentSummoner);
-  winApp.webContents.send('tft-connected', currentSummoner);
-});
+const tftAdapter = new TftAdapter(
+  twitchAdapter,
+  async () => {
+    const currentSummoner = await tftAdapter.getCurrentSummoner();
+    console.log('current summoner:::', currentSummoner);
+    winApp.webContents.send('tft-connected', currentSummoner);
+  },
+  async () => {
+    winApp.webContents.send('tft-disconnected');
+  }
+);
 
 function createWindow() {
   const window: BrowserWindow = new BrowserWindow({
