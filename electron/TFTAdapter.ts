@@ -27,54 +27,61 @@ export default class TftAdapter {
     this.connector.on('disconnect', async () => {
       this.riotCredentials = null;
       this.clientConnected = false;
+      this.ws.close();
+      this.ws = null;
       await onDisconnect();
+      console.log('disconnected from client');
     });
     this.connector.start();
   }
 
   // TODO: pass here the callbacks?
   async connect(onConnect: () => void) {
-    return new Promise((resolve) => {
+    if (this.clientConnected) {
       const url = `wss://${this.riotCredentials.username}:${this.riotCredentials.password}@127.0.0.1:${this.riotCredentials.port}`;
+      console.log('instantiating RiotWSProtocol with url: ', url);
       this.ws = new RiotWSProtocol(url);
-      this.ws.on('open', async () => {
-        const interval = setInterval(() => {
-          if (this.clientConnected) {
-            this.ws.on('open', async () => {
-              try {
-                this.ws.subscribe('nothing', () => {});
-              } catch (e) {
-                return;
-              }
-              try {
-                const summoner = await this.getCurrentSummoner();
-                if (!summoner.username) {
-                  return;
-                }
-                console.log('TFT service available, username: ', summoner.username);
-              } catch (e) {
-                return;
-              }
-              this.ws.subscribe('OnJsonApiEvent_lol-gameflow_v1_gameflow-phase', (data) => {
-                if (data.data === 'GameStart') {
-                  // Limit to TFT
-                  this.currentPrediction = this.twitchAdapter.createPrediction();
-                }
-              });
-              this.ws.subscribe('OnJsonApiEvent_lol-end-of-game_v1_gameclient-eog-stats-block', async (data) => {
-                if (!data?.data?.statsBlock?.players) return;
-                console.log('game ended');
-                await this.resolveCurrentPrediction(data);
-                await this.twitchAdapter.launchAd();
-              });
-              clearInterval(interval);
-              await onConnect();
-              resolve(null);
-            });
+      console.log('connecting to riot ws');
+      // wait until ws is ready
+      await new Promise((resolve) => {
+        console.log('waiting for ws to be ready');
+        console.log('ws ready?', this.ws.readyState);
+        const interval = setInterval(async () => {
+          if (this.ws.readyState > 1) {
+            this.ws = new RiotWSProtocol(url);
+          }
+          console.log("polling ws's readyState", this.ws.readyState);
+          if (this.ws.readyState === 1) {
+            console.log('connected to client successfully');
+            clearInterval(interval);
+            resolve();
           }
         }, 1000);
       });
-    });
+      await new Promise((resolve) => {
+        console.log('waiting for summoner');
+        const interval = setInterval(async () => {
+          const summoner = await this.getCurrentSummoner();
+          if (summoner.username) {
+            clearInterval(interval);
+            resolve();
+          }
+        }, 1000);
+      });
+      this.ws.subscribe('OnJsonApiEvent_lol-gameflow_v1_gameflow-phase', (data) => {
+        if (data.data === 'GameStart') {
+          // Limit to TFT
+          this.currentPrediction = this.twitchAdapter.createPrediction();
+        }
+      });
+      this.ws.subscribe('OnJsonApiEvent_lol-end-of-game_v1_gameclient-eog-stats-block', async (data) => {
+        if (!data?.data?.statsBlock?.players) return;
+        console.log('game ended');
+        await this.resolveCurrentPrediction(data);
+        await this.twitchAdapter.launchAd();
+      });
+      await onConnect();
+    }
   }
 
   private async resolveCurrentPrediction(data) {

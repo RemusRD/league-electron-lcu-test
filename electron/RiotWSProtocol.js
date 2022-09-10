@@ -17,8 +17,12 @@ const MESSAGE_TYPES = {
 
 export class RiotWSProtocol extends WebSocket {
   constructor(url) {
-    super(url, 'wamp');
+    super(url, 'wamp', {
+      rejectUnauthorized: false,
+      handshakeTimeout: 10000
+    });
     this.session = null;
+    this.on('error', console.error);
     // eslint-disable-next-line no-underscore-dangle
     this.on('message', this._onMessage.bind(this));
   }
