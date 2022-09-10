@@ -3,13 +3,15 @@ import { join } from 'path';
 // Packages
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import * as electron from 'electron';
-import { app, BrowserWindow, dialog, ipcMain } from 'electron';
+import { BrowserWindow, dialog, ipcMain } from 'electron';
 import isDev from 'electron-is-dev';
 import { autoUpdater } from 'electron-updater';
 import TftAdapter from './TFTAdapter';
 import TwitchAdapter from './TwitchAdapter';
 
 const log = require('electron-log');
+
+const { app } = electron;
 
 console.log = log.log;
 
@@ -41,7 +43,8 @@ function createWindow() {
     resizable: true,
     fullscreenable: true,
     webPreferences: {
-      preload: join(__dirname, 'preload.js')
+      preload: join(__dirname, 'preload.js'),
+      nodeIntegration: true
     }
   });
 
@@ -66,7 +69,7 @@ app.whenReady().then(async () => {
   });
 
   winApp.webContents.on('did-finish-load', () => {
-    winApp.webContents.send('app-version', process.env.npm_package_version);
+    winApp.webContents.send('app-version', app.getVersion());
   });
 });
 
