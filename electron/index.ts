@@ -1,6 +1,5 @@
 // @ts-nocheck
 import { join } from 'path';
-
 // Packages
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import * as electron from 'electron';
@@ -9,6 +8,10 @@ import isDev from 'electron-is-dev';
 import { autoUpdater } from 'electron-updater';
 import TftAdapter from './TFTAdapter';
 import TwitchAdapter from './TwitchAdapter';
+
+const log = require('electron-log');
+
+console.log = log.log;
 
 electron.app.commandLine.appendSwitch('ignore-certificate-errors');
 
