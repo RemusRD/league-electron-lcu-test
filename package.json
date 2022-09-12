@@ -46,7 +46,7 @@
     "twitch": "^4.6.7",
     "twitch-chat-client": "^4.6.7",
     "vite": "^3.1.0",
-    "vite-plugin-electron": "^0.9.2"
+    "vite-plugin-electron": "^0.9.3"
   },
   "devDependencies": {
     "@types/node": "^18.7.16",
