@@ -64,16 +64,9 @@ function App() {
         <div className="flex flex-col space-y-4 items-center">
           <div className="flex space-x-3">
             <img className="h-6 lg:-ml-2" src={TftIcon} alt="Tft icon" />
-            <h1 className="text-xl text-gray-50">League of legends(requiere cliente iniciado): </h1>
-            {!riotClientInfo && (
-              <button
-                onClick={connectTft}
-                className=" bg-amber-500 rounded px-4 py-0 focus:outline-none hover:bg-amber-300"
-              >
-                Conectar
-              </button>
-            )}
-            {riotClientInfo && <h1 className="text-xl text-gray-50">{riotClientInfo.username} </h1>}
+            <h1 className="text-xl text-gray-50">
+              {riotClientInfo ? `Iniciada sesión como: ${riotClientInfo.username}` : 'Iniciar league of legends'}
+            </h1>
           </div>
           <div className="flex space-x-3">
             <img className="h-6 lg:-ml-2" src={TwitchIcon} alt="Tft icon" />
