@@ -45,8 +45,11 @@ export default class TwitchAdapter {
       })()
     );
 
-    console.log(`Twitch created prediction`);
-    return new Prediction(prediction.outcomes.map((outcome) => new PredictionOutcome(outcome.id, outcome.title)));
+    const mappedPrediction = new Prediction(
+      prediction.outcomes.map((outcome) => new PredictionOutcome(outcome.id, outcome.title))
+    );
+    console.log(`Twitch created prediction, ${mappedPrediction}`);
+    return mappedPrediction;
   }
 
   async endPrediction(predictionId: string, outcome: PredictionOutcome) {
