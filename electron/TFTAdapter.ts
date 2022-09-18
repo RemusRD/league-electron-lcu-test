@@ -76,7 +76,7 @@ export default class TftAdapter {
       });
       this.ws.subscribe('OnJsonApiEvent_lol-end-of-game_v1_gameclient-eog-stats-block', async (data) => {
         if (!data?.data?.statsBlock?.players) return;
-        console.log('game ended');
+        console.log('game ended, current prediction', JSON.stringify(this.currentPrediction));
         await this.resolveCurrentPrediction(data);
         await this.twitchAdapter.launchAd();
       });
@@ -91,6 +91,7 @@ export default class TftAdapter {
         (player: any) => player.summonerName === summoner.username
       ).ffaStanding;
       console.log('summonerPosition', summonerPosition);
+      console.log('Possible outcomes: ', JSON.stringify(this.currentPrediction.outcomes));
       const outcome = this.currentPrediction?.outcomes?.find((outcome: any) =>
         outcome.title.includes(summonerPosition)
       );

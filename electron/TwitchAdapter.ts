@@ -44,11 +44,12 @@ export default class TwitchAdapter {
         autoLockAfter = '120';
       })()
     );
+    console.log('Created prediction', JSON.stringify(prediction));
 
     const mappedPrediction = new Prediction(
       prediction.outcomes.map((outcome) => new PredictionOutcome(outcome.id, outcome.title))
     );
-    console.log(`Twitch created prediction, ${mappedPrediction}`);
+    console.log(`Twitch created prediction, ${JSON.stringify(mappedPrediction)}`);
     return mappedPrediction;
   }
 
