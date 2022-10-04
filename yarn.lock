@@ -590,10 +590,10 @@
     "@twurple/common" "^5.2.4"
     tslib "^2.0.3"
 
-"@twurple/auth-electron@^5.2.4":
-  version "5.2.4"
-  resolved "https://registry.yarnpkg.com/@twurple/auth-electron/-/auth-electron-5.2.4.tgz#7f424ee0577b097e0658b63944cc8983f08e6b6b"
-  integrity sha512-823O1H0UQ3gmDHFo8wDmr2RdyaZYh/5f+beoSkdOE/4lbLIEzOaLsT07s/ht+e79l2oBygIYABLg9jDmZmB8eg==
+"@twurple/auth-electron@^5.2.5":
+  version "5.2.5"
+  resolved "https://registry.yarnpkg.com/@twurple/auth-electron/-/auth-electron-5.2.5.tgz#c5043be76e70bc8b46542c8c2ec58a5c7d46a1ab"
+  integrity sha512-qVUiIjx6js4DgCr9h+p5KkaWG6SmB3uOC3vgGM6NfP8bsb8kvMRiMsyRQixZ3WSvL2z8G4/0siF/BFUAugIpsg==
   dependencies:
     "@d-fischer/qs" "^7.0.2"
     "@d-fischer/shared-utils" "^3.2.0"
