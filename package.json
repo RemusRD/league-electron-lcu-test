@@ -30,7 +30,7 @@
     "release": "yarn build && electron-builder -p always"
   },
   "dependencies": {
-    "@twurple/api": "^5.2.4",
+    "@twurple/api": "^5.2.5",
     "@twurple/auth": "^5.2.4",
     "@twurple/auth-electron": "^5.2.4",
     "@twurple/chat": "^5.2.4",
