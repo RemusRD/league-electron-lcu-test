@@ -45,7 +45,7 @@
     "react-dom": "^17.0.2",
     "twitch": "^4.6.7",
     "twitch-chat-client": "^4.6.7",
-    "vite": "^3.1.4",
+    "vite": "^3.1.7",
     "vite-plugin-electron": "^0.9.3"
   },
   "devDependencies": {
