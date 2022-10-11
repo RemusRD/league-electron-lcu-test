@@ -71,7 +71,7 @@ export default class TftAdapter {
       this.ws.subscribe('OnJsonApiEvent_lol-gameflow_v1_gameflow-phase', (data) => {
         if (data.data === 'GameStart') {
           // Limit to TFT
-          this.currentPrediction = this.twitchAdapter.createPrediction();
+          this.currentPrediction = await this.twitchAdapter.createPrediction();
         }
       });
       this.ws.subscribe('OnJsonApiEvent_lol-end-of-game_v1_gameclient-eog-stats-block', async (data) => {
