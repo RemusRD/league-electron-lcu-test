@@ -610,10 +610,10 @@
     "@twurple/common" "^5.2.5"
     tslib "^2.0.3"
 
-"@twurple/chat@^5.2.4":
-  version "5.2.4"
-  resolved "https://registry.yarnpkg.com/@twurple/chat/-/chat-5.2.4.tgz#a7e9e86287b3fb80b25a02d590f87554fa9bb67b"
-  integrity sha512-3A62Tolw5Kpg4pUxBx8qozMn23biVKjRtvT1QiDgYY/mW1QEC/1wsnpTXHrj+iIXLKg781u711V2YzazOCJ6iw==
+"@twurple/chat@^5.2.6":
+  version "5.2.6"
+  resolved "https://registry.yarnpkg.com/@twurple/chat/-/chat-5.2.6.tgz#028b8691abd60d67ad50aa1eda20c77ccc0843b8"
+  integrity sha512-pFxyXrF0QEOt1i77t1P0rq+9XvqJpCZEJXMc11tX7hke/kao21sSdoWbnsUrMsfzqWwZwFrei0AlSa8yJX5xBg==
   dependencies:
     "@d-fischer/cache-decorators" "^3.0.0"
     "@d-fischer/deprecate" "^2.0.2"
@@ -621,14 +621,14 @@
     "@d-fischer/rate-limiter" "^0.6.1"
     "@d-fischer/shared-utils" "^3.2.0"
     "@d-fischer/typed-event-emitter" "^3.2.2"
-    "@twurple/common" "^5.2.4"
+    "@twurple/common" "^5.2.6"
     ircv3 "^0.29.3"
     tslib "^2.0.3"
 
-"@twurple/common@^5.2.4", "@twurple/common@^5.2.5":
-  version "5.2.5"
-  resolved "https://registry.yarnpkg.com/@twurple/common/-/common-5.2.5.tgz#ceb97aa4df5e5e91e6ef3dedc52c3cf7c8b7ea54"
-  integrity sha512-pZe/IjdNfxiKtVw+3ntViq0gMnZrx8x+VB3aAzl/hB6bE10iUB0vV0qK7gCrvDJCnMDk0oGFLdl+nQOwkDHVpQ==
+"@twurple/common@^5.2.5", "@twurple/common@^5.2.6":
+  version "5.2.6"
+  resolved "https://registry.yarnpkg.com/@twurple/common/-/common-5.2.6.tgz#c9748114fb5451856927b46e7c8d1abbf3528da6"
+  integrity sha512-6dQGvHGodhSuLBQ/POsdbHWIT2GXo86jaRF9Y/kMJw7/rpsbFbJeztvyM9gK03FZunZV/qDhjUkrtTggcoRalw==
   dependencies:
     "@d-fischer/shared-utils" "^3.2.0"
     klona "^2.0.4"
