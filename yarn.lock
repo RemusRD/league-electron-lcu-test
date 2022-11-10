@@ -694,15 +694,15 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-12.20.55.tgz#c329cbd434c42164f846b909bd6f85b5537f6240"
   integrity sha512-J8xLz7q2OFulZ2cyGTLE1TbbZcjpno7FaN6zdJNrgAdrJ+DZzh/uFR6YrTb4C+nXakvud8Q4+rbhoIWlYQbUFQ==
 
-"@types/node@^14.11.2", "@types/node@^14.14.19", "@types/node@^14.14.22", "@types/node@^14.6.2":
+"@types/node@^14.11.2", "@types/node@^14.14.19", "@types/node@^14.14.22":
   version "14.18.26"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-14.18.26.tgz#239e19f8b4ea1a9eb710528061c1d733dc561996"
   integrity sha512-0b+utRBSYj8L7XAp0d+DX7lI4cSmowNaaTkk6/1SKzbKkG+doLuPusB9EOvzLJ8ahJSk03bTLIL6cWaEd4dBKA==
 
-"@types/node@^16.7.10":
-  version "16.11.56"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-16.11.56.tgz#dcbb617669481e158e0f1c6204d1c768cd675901"
-  integrity sha512-aFcUkv7EddxxOa/9f74DINReQ/celqH8DiB3fRYgVDM2Xm5QJL8sl80QKuAnGvwAsMn+H3IFA6WCrQh1CY7m1A==
+"@types/node@^16.11.26", "@types/node@^16.7.10":
+  version "16.18.3"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-16.18.3.tgz#d7f7ba828ad9e540270f01ce00d391c54e6e0abc"
+  integrity sha512-jh6m0QUhIRcZpNv7Z/rpN+ZWXOicUUQbSoWks7Htkbb9IjFQj4kzcX/xFCkjstCj5flMsN8FiSvt+q+Tcs4Llg==
 
 "@types/plist@^3.0.1":
   version "3.0.2"
@@ -2039,13 +2039,13 @@ electron-updater@^5.2.1:
     semver "^7.3.5"
     typed-emitter "^2.1.0"
 
-electron@^17.4.11:
-  version "17.4.11"
-  resolved "https://registry.yarnpkg.com/electron/-/electron-17.4.11.tgz#82899a44336bf8f1af15c6312c7f51ae3f4a519b"
-  integrity sha512-mdSWM2iY/Bh5bKzd5drYS3mf8JWyR9P9UXZA2uLEZ+1fhgLEVkY9qu501QHoMsKlNwgn96EreQC+dfdQ75VTcA==
+electron@^18.3.7:
+  version "18.3.7"
+  resolved "https://registry.yarnpkg.com/electron/-/electron-18.3.7.tgz#a22a23d63811d067c8e33abc5674122408319265"
+  integrity sha512-SDvX0VYejR1xw9PrJyvnyiDcuIhdzFVaA1NaRN2LEWXr5R6mEFl8NVTM+i5dtxMm2SHP/FPnkvmsWZs6MHijqg==
   dependencies:
     "@electron/get" "^1.13.0"
-    "@types/node" "^14.6.2"
+    "@types/node" "^16.11.26"
     extract-zip "^1.0.3"
 
 emoji-regex@^8.0.0:
